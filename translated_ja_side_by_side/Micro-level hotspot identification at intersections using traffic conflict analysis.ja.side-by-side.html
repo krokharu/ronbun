@@ -598,6 +598,7 @@
   <div class="side-print-mode-actions">
     <button id="sidePrintModeExit" type="button">解除</button>
     <button class="primary" id="sidePrintModePrint" type="button" title="印刷画面でPDFとして保存">印刷用PDFを作成</button>
+    <button class="primary" id="sidePrintModePrintLandscape" type="button" title="横向きで印刷画面を開く">横でPDFを作成</button>
   </div>
 </div>
 <header class="site-header">
@@ -619,6 +620,7 @@
         <label class="option-row"><input id="sidePrintRules" type="checkbox"> 罫線あり</label>
         <label class="option-row"><input id="sidePrintMode" type="checkbox"> 印刷モード</label>
         <button class="print-button" id="sidePrintButton" type="button" title="印刷画面でPDFとして保存">印刷用PDFを作成</button>
+        <button class="print-button" id="sidePrintLandscapeButton" type="button" title="横向きで印刷画面を開く">横でPDFを作成</button>
       </div>
     </div>
   </div>
@@ -883,12 +885,14 @@
       const menuWrap = document.getElementById("sideHeaderActions");
       const menuToggle = document.getElementById("sideMenuToggle");
       const printButton = document.getElementById("sidePrintButton");
+      const printLandscapeButton = document.getElementById("sidePrintLandscapeButton");
       const printSummary = document.getElementById("sidePrintSummary");
       const printDuplex = document.getElementById("sidePrintDuplex");
       const printRules = document.getElementById("sidePrintRules");
       const printMode = document.getElementById("sidePrintMode");
       const printModeExit = document.getElementById("sidePrintModeExit");
       const printModePrint = document.getElementById("sidePrintModePrint");
+      const printModePrintLandscape = document.getElementById("sidePrintModePrintLandscape");
       const orientationButtons = Array.from(document.querySelectorAll("[data-print-orientation]"));
       let printOrientation = localStorage.getItem(storagePrefix + "orientation") || "landscape";
 
@@ -994,11 +998,17 @@
       if (printButton) {
         printButton.addEventListener("click", () => printWithViewerOptions(currentOptions()));
       }
+      if (printLandscapeButton) {
+        printLandscapeButton.addEventListener("click", () => printWithViewerOptions({ ...currentOptions(), orientation: "landscape" }));
+      }
       if (printModeExit) {
         printModeExit.addEventListener("click", () => applyViewerDisplayOptions({ ...currentOptions(), printMode: false }));
       }
       if (printModePrint) {
         printModePrint.addEventListener("click", () => printWithViewerOptions(currentOptions()));
+      }
+      if (printModePrintLandscape) {
+        printModePrintLandscape.addEventListener("click", () => printWithViewerOptions({ ...currentOptions(), orientation: "landscape" }));
       }
       document.addEventListener("click", (event) => {
         if (menuWrap && !menuWrap.contains(event.target)) setMenuOpen(false);
