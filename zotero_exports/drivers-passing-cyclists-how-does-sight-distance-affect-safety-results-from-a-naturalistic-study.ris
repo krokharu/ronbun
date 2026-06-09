@@ -1,0 +1,20 @@
+TY  - JOUR
+T1  - Drivers passing cyclists: How does sight distance affect safety? Results from a naturalistic study
+AU  - Rasch, Alexander
+AU  - Tarakanov, Yury
+AU  - Tellwe, Gustav
+AU  - Dozza, Marco
+JF  - Journal of Safety Research
+JO  - Journal of Safety Research
+VL  - 87
+SP  - 76-85
+PY  - 2023
+DO  - 10.1016/j.jsr.2023.09.006
+UR  - https://doi.org/10.1016/j.jsr.2023.09.006
+AB  - Introduction: Cycling is popular for its ecological, economic, and health benefits. However, especially in rural areas, cyclists may need to share the road with motorized traffic, which is often perceived as a threat. Overtaking a cyclist is a particularly critical maneuver for drivers as they need to control their lateral clearance and speed when passing the cyclist, possibly in the presence of oncoming vehicles or viewobstructing curves. An overtaking vehicle can destabilize the cyclist when passing with low clearance and high speed. At the same time, the cyclist may get scared and eventually stop cycling. In this work, we investigated how visibility regarding available sight distance—an important factor for infrastructure design and regulation—affects drivers’ behavior when overtaking cyclists. Method: Using four roadsidebased traffic sensors, we collected naturalistic data that contained kinematics of drivers overtaking cyclists on a rural road in Sweden. We modeled lateral clearance and speed at the passing moment in response to variables such as sight distance and oncoming traffic with a Bayesian multivariate approach. Results: Fitted on 81 maneuvers, the model revealed that drivers reduced lateral clearance under reduced sight distance. Speed was similarly reduced, however, not as clearly. When an oncoming vehicle was present, it had a similar—yet stronger—effect than sight distance. While we found an overall correlation between clearance and speed, some maneuvers were recorded at critically low clearance. Conclusions: Cyclists’ safety is endangered when passed by drivers under reduced visibility or close to oncoming traffic. Practical Applications: Decision-making for infrastructure and policymaking should aim at prohibiting overtaking in areas with reduced visibility or close oncoming traffic. The model developed in this study may serve as a reference to vehicle active-safety systems and automated driving. The collected and processed data may support evaluating driver models fitted on less ecologically valid data and simulated active-safety systems. 2023 The Author(s).
+KW  - Cyclist safety
+KW  - Overtaking
+KW  - Sight distance
+KW  - Naturalistic data
+KW  - Bayesian model
+ER  -
