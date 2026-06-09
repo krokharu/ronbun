@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>日本語訳: Investigation on road traffic safety in rural areas</title>
   <style>
+
     :root {
       color-scheme: light;
       --border: #d7dde5;
@@ -12,6 +13,8 @@
       --muted: #52606d;
       --guide-bg: #f5f7fa;
       --guide-border: #6b8faf;
+      --panel: #f8fafc;
+      --rule: #9ca3af;
     }
     body {
       color: var(--ink);
@@ -20,20 +23,99 @@
       margin: 0;
       background: #ffffff;
     }
-    header {
+    .site-header {
       border-bottom: 1px solid var(--border);
       margin: 0 auto;
       max-width: 1480px;
       padding: 24px 24px 18px;
     }
-    header h1 {
+    .header-shell {
+      align-items: start;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .header-copy h1 {
       font-size: 1.55rem;
       line-height: 1.35;
       margin: 0 0 0.75rem;
     }
-    header ul {
+    .header-copy ul {
       margin: 0;
       padding-left: 1.2rem;
+    }
+    .header-actions {
+      position: relative;
+    }
+    .menu-button,
+    .print-button,
+    .orientation-button {
+      appearance: none;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+    }
+    .menu-button {
+      min-width: 92px;
+      padding: 0.55rem 0.8rem;
+    }
+    .side-menu {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+      display: none;
+      min-width: 260px;
+      padding: 12px;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      z-index: 10;
+    }
+    .header-actions.menu-open .side-menu {
+      display: block;
+    }
+    .menu-label {
+      color: var(--muted);
+      display: block;
+      font-size: 0.82rem;
+      line-height: 1.35;
+      margin: 0 0 0.45rem;
+    }
+    .orientation-group {
+      display: grid;
+      gap: 6px;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 0.7rem;
+    }
+    .orientation-button {
+      padding: 0.45rem 0.7rem;
+    }
+    .orientation-button.active {
+      background: #243447;
+      border-color: #243447;
+      color: #ffffff;
+    }
+    .option-row {
+      align-items: center;
+      display: flex;
+      gap: 0.55rem;
+      margin: 0.55rem 0;
+    }
+    .option-row input {
+      height: 1rem;
+      width: 1rem;
+    }
+    .print-button {
+      background: #243447;
+      border-color: #243447;
+      color: #ffffff;
+      margin-top: 0.55rem;
+      padding: 0.55rem 0.75rem;
+      width: 100%;
     }
     main {
       margin: 0 auto;
@@ -100,10 +182,202 @@
       border: 1px solid var(--border);
       padding: 1rem;
     }
+    .print-title-page,
+    .print-summary-page {
+      display: none;
+    }
+    .side-print-mode-bar {
+      align-items: center;
+      background: #243447;
+      color: #ffffff;
+      display: none;
+      gap: 10px;
+      justify-content: space-between;
+      min-height: 46px;
+      padding: 8px 14px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .side-print-mode-bar span {
+      font-weight: 700;
+    }
+    .side-print-mode-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .side-print-mode-bar button {
+      appearance: none;
+      background: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 8px;
+      color: #243447;
+      cursor: pointer;
+      font: inherit;
+      min-height: 32px;
+      padding: 0 12px;
+    }
+    .side-print-mode-bar .primary {
+      background: #ffffff;
+      color: #123c69;
+      font-weight: 700;
+    }
+    .print-title-page h1,
+    .print-summary-page h2 {
+      line-height: 1.35;
+      margin: 0 0 1rem;
+    }
+    .print-title-meta {
+      color: var(--muted);
+      margin-top: 1.5rem;
+    }
+    body.print-rules .page-pair {
+      border-bottom-color: var(--rule);
+    }
+    body.print-rules .page-visual,
+    body.print-rules .page-translation {
+      border: 1px solid var(--rule);
+      box-sizing: border-box;
+      padding: 14px;
+    }
+    body.print-rules h1,
+    body.print-rules h2,
+    body.print-rules h3 {
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 8px;
+    }
+    body.print-rules p,
+    body.print-rules li {
+      --rule-row-height: 1.75em;
+      background-image: linear-gradient(
+        to bottom,
+        transparent calc(var(--rule-row-height) - 1px),
+        rgba(156, 163, 175, 0.8) calc(var(--rule-row-height) - 1px)
+      );
+      background-origin: content-box;
+      background-clip: content-box;
+      background-repeat: repeat-y;
+      background-size: 100% var(--rule-row-height);
+      padding-bottom: 0.35em;
+    }
+    body.print-mode {
+      background: #d8dee8;
+      font-size: 10pt;
+      line-height: 1.5;
+      padding: 0 18px 24px;
+    }
+    body.print-mode:not(.embedded-frame) .side-print-mode-bar {
+      display: flex;
+    }
+    body.print-mode .site-header {
+      display: none;
+    }
+    body.print-mode main {
+      margin: 18px auto 0;
+      max-width: none;
+      padding: 0;
+    }
+    body.print-mode h2 {
+      font-size: 12pt;
+    }
+    body.print-mode h3 {
+      font-size: 10pt;
+    }
+    body.print-mode .page-pair,
+    body.print-mode .print-title-page,
+    body.print-mode .print-summary-page {
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+      box-sizing: border-box;
+      margin-bottom: 18px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 34px 38px;
+    }
+    body.print-mode .sticky {
+      position: static;
+    }
+    body.print-mode img {
+      max-height: none;
+    }
+    body.print-mode.print-landscape .page-pair {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: 48% 1fr;
+      max-width: 1123px;
+      min-height: 794px;
+      page-break-after: auto;
+    }
+    body.print-mode.print-landscape .page-translation {
+      font-size: 7.2pt;
+      line-height: 1.24;
+    }
+    body.print-mode.print-landscape .page-translation h2,
+    body.print-mode.print-landscape .page-translation h3 {
+      font-size: 8.4pt;
+    }
+    body.print-mode.print-landscape img {
+      max-height: 680px;
+    }
+    body.print-mode.print-portrait .print-title-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 794px;
+      min-height: 1123px;
+    }
+    body.print-mode.print-portrait .page-pair {
+      background: transparent;
+      box-shadow: none;
+      display: contents;
+      padding: 0;
+    }
+    body.print-mode.print-portrait .page-visual,
+    body.print-mode.print-portrait .page-translation {
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+      box-sizing: border-box;
+      margin: 0 auto 18px;
+      max-width: 794px;
+      min-height: 1123px;
+      padding: 34px 38px;
+    }
+    body.print-mode.print-portrait .page-visual {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    body.print-mode.print-portrait .page-translation {
+      font-size: 8.8pt;
+      line-height: 1.38;
+    }
+    body.print-mode.print-portrait img {
+      max-height: 960px;
+    }
+    body.print-mode.print-with-summary .print-summary-page {
+      display: block;
+      max-width: 794px;
+      min-height: 1123px;
+    }
+    body.print-mode.print-with-summary.print-landscape .print-summary-page {
+      max-width: 1123px;
+      min-height: 794px;
+    }
     @media (max-width: 900px) {
-      header, main {
+      .site-header,
+      main {
         padding-left: 14px;
         padding-right: 14px;
+      }
+      .header-shell {
+        grid-template-columns: 1fr;
+      }
+      .header-actions {
+        justify-self: start;
+      }
+      .side-menu {
+        left: 0;
+        right: auto;
       }
       .page-pair {
         grid-template-columns: 1fr;
@@ -116,9 +390,42 @@
       }
     }
     @media print {
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+      html,
+      body {
+        background: #ffffff !important;
+      }
+      body {
+        font-size: 10pt;
+        line-height: 1.5;
+      }
+      .site-header {
+        display: none !important;
+      }
+      main {
+        margin: 0;
+        max-width: none;
+        padding: 0;
+      }
+      h2 {
+        font-size: 12pt;
+      }
+      h3 {
+        font-size: 10pt;
+      }
+      p {
+        margin-bottom: 0.55rem;
+      }
+      ul {
+        margin-bottom: 0.65rem;
+      }
       .page-pair {
-        break-inside: avoid;
-        grid-template-columns: 48% 1fr;
+        border: 0;
+        margin: 0;
+        padding: 0;
       }
       .sticky {
         position: static;
@@ -126,7 +433,125 @@
       img {
         max-height: none;
       }
+      figcaption {
+        font-size: 8pt;
+      }
+      body.print-landscape .page-pair {
+        break-after: page;
+        break-inside: avoid;
+        display: grid;
+        gap: 7mm;
+        grid-template-columns: 48% 1fr;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+        page-break-inside: avoid;
+      }
+      body.print-landscape .page-visual,
+      body.print-landscape .page-translation {
+        align-self: start;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      body.print-landscape .page-translation {
+        font-size: 7.2pt;
+        line-height: 1.24;
+      }
+      body.print-landscape .page-translation h2,
+      body.print-landscape .page-translation h3 {
+        font-size: 8.4pt;
+      }
+      body.print-landscape .page-translation > ul:first-of-type {
+        background: transparent;
+        border-left-width: 2px;
+        padding: 0.35rem 0.5rem 0.35rem 0.85rem;
+      }
+      body.print-landscape img {
+        max-height: calc(100vh - 18mm);
+      }
+      body.print-portrait .print-title-page {
+        break-after: page;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+      }
+      body.print-portrait .print-title-page h1 {
+        font-size: 22pt;
+      }
+      body.print-portrait .page-pair {
+        display: block;
+      }
+      body.print-portrait .page-visual,
+      body.print-portrait .page-translation {
+        break-after: page;
+        box-sizing: border-box;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+      }
+      body.print-portrait .page-visual {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      body.print-portrait .page-translation {
+        font-size: 8.8pt;
+        line-height: 1.38;
+      }
+      body.print-portrait img {
+        max-height: calc(100vh - 24mm);
+      }
+      body.print-with-summary .print-summary-page {
+        break-before: page;
+        box-sizing: border-box;
+        display: block;
+        min-height: calc(100vh - 4mm);
+        page-break-before: always;
+      }
+      body.print-with-summary .print-summary-page li {
+        margin-bottom: 0.5rem;
+      }
+      body.print-rules .print-title-page,
+      body.print-rules .print-summary-page,
+      body.print-rules .page-visual,
+      body.print-rules .page-translation {
+        border: 1px solid var(--rule);
+        padding: 4mm;
+      }
+      body.print-rules p,
+      body.print-rules li {
+        --rule-row-height: 1.5em;
+      }
+      body.print-rules.print-landscape .page-translation p,
+      body.print-rules.print-landscape .page-translation li {
+        --rule-row-height: 1.24em;
+      }
+      body.print-rules.print-portrait .page-translation p,
+      body.print-rules.print-portrait .page-translation li {
+        --rule-row-height: 1.38em;
+      }
+      * {
+        box-shadow: none !important;
+      }
+      .side-print-mode-bar {
+        display: none !important;
+      }
+      body.print-mode {
+        background: #ffffff !important;
+        padding: 0;
+      }
+      body.print-mode .page-pair,
+      body.print-mode .print-title-page,
+      body.print-mode .print-summary-page,
+      body.print-mode .page-visual,
+      body.print-mode .page-translation {
+        box-shadow: none;
+        margin: 0;
+        max-width: none;
+      }
     }
+
   </style>
 <!-- zotero-connector-head:start -->
 <meta name="citation_title" content="Investigation on road traffic safety in rural areas using trajectory data: case studies at two measurement sites" data-zotero-connector="server">
@@ -170,11 +595,42 @@
 <!-- zotero-connector-body:start -->
 <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Investigation+on+road+traffic+safety+in+rural+areas+using+trajectory+data%3A+case+studies+at+two+measurement+sites&amp;rft.jtitle=Traffic+Safety+Research&amp;rft.date=2025&amp;rft.volume=9&amp;rft.pages=e000120&amp;rft_id=info%3Adoi%2F10.55329%2Fditw1500&amp;rft.au=Lars+Klitzke&amp;rft.au=Claudia+Leschik&amp;rft.au=Richard+L%C3%BCdtke&amp;rft.au=Kay+Gimm" data-zotero-connector="server" hidden></span>
 <!-- zotero-connector-body:end -->
-<header>
-<h1>日本語訳: Investigation on road traffic safety in rural areas</h1>
+<div class="side-print-mode-bar" id="sidePrintModeBar">
+  <span>印刷モード</span>
+  <div class="side-print-mode-actions">
+    <button id="sidePrintModeExit" type="button">解除</button>
+    <button class="primary" id="sidePrintModePrint" type="button" title="印刷画面でPDFとして保存">印刷用PDFを作成</button>
+  </div>
+</div>
+<header class="site-header">
+  <div class="header-shell">
+    <div class="header-copy">
+      <h1>日本語訳: Investigation on road traffic safety in rural areas</h1>
 <ul><li>原文ファイル: Investigation on road traffic safety in rural areas.pdf</li><li>ページ数: 19</li><li>作成日時: 2026-06-08 04:54:58</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+    </div>
+    <div class="header-actions" id="sideHeaderActions">
+      <button class="menu-button" id="sideMenuToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sidePrintMenu">メニュー</button>
+      <div class="side-menu" id="sidePrintMenu" role="menu" aria-label="印刷メニュー">
+        <span class="menu-label">印刷方向</span>
+        <div class="orientation-group" role="group" aria-label="印刷方向">
+          <button class="orientation-button" type="button" data-print-orientation="portrait" aria-pressed="false">縦</button>
+          <button class="orientation-button" type="button" data-print-orientation="landscape" aria-pressed="true">横</button>
+        </div>
+        <label class="option-row"><input id="sidePrintSummary" type="checkbox"> 要約付き</label>
+        <label class="option-row"><input id="sidePrintDuplex" type="checkbox"> 両面向け余白</label>
+        <label class="option-row"><input id="sidePrintRules" type="checkbox"> 罫線あり</label>
+        <label class="option-row"><input id="sidePrintMode" type="checkbox"> 印刷モード</label>
+        <button class="print-button" id="sidePrintButton" type="button" title="印刷画面でPDFとして保存">印刷用PDFを作成</button>
+      </div>
+    </div>
+  </div>
 </header>
 <main>
+<section class="print-title-page" aria-label="タイトル">
+  <h1>日本語訳: Investigation on road traffic safety in rural areas</h1>
+  <p>原文PDFと日本語訳の見開き印刷用ページです。</p>
+  <ul class="print-title-meta"><li>原文ファイル: Investigation on road traffic safety in rural areas.pdf</li><li>ページ数: 19</li><li>作成日時: 2026-06-08 04:54:58</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+</section>
 
 <section class="page-pair" id="page-1">
   <aside class="page-visual">
@@ -481,7 +937,167 @@
   </article>
 </section>
 
+
+<section class="print-summary-page" aria-label="要約">
+  <h2>要約</h2>
+  <p>日本語訳: Investigation on road traffic safety in rural areas</p>
+  <ul><li>原文ファイル: Investigation on road traffic safety in rural areas.pdf</li><li>ページ数: 19</li><li>作成日時: 2026-06-08 04:54:58</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+  <ol>
+    <li><strong>ページ 1</strong>: Klitzke, L.、Leschik, C.、Lüdtke, R.、&amp; Gimm, K. (2025)、軌跡データを使用した農村部の道路交通安全の調査: 2 つの測定サイトでのケーススタディ。交通安全研究、9、e000120。 https://doi.org/10.55329/ditw1500 研究論文 軌跡データを用いた農村地域にお…</li><li><strong>ページ 2</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全に関する調査: ケーススタディ... 彼らは、速度、インフラ、静止物体、時間帯、動物、さらに違法運転や薬物またはアルコールの影響下での運転を含む 15 の要因を特定しました。農村部では多種多様な車両が存在し、田舎ではオートバイや自転車の事故のリスクが高いことが指摘されて…</li><li><strong>ページ 3</strong>: クリツケら。 (2025) 軌跡データを用いた農村部の交通安全に関する調査: ケーススタディ... 2 つのセンサー システムが、最大 8 メートルの長さまで伸ばすことができる伸縮式マストに取り付けられています。各センサー システムは、ビジョンベースの交通データ収集用のステレオ カメラと赤外線フラッシュで構成されます。後者は、夕暮れや夜…</li><li><strong>ページ 4</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全に関する調査: ケーススタディ... 図 1. 行ごとに配置された両方の測定サイトの概要。(a) はペッツを示し、(b) はベステンゼーを示しています。 2.3.1 データの前処理 測定ステーションは、検出された交通参加者の軌跡と、注釈付きの交通参加者を含むビデオ素材を…</li><li><strong>ページ 5</strong>: クリツケら。 (2025) 軌跡データを用いた農村部の交通安全に関する調査: 事例研究... 交通安全に関する交通データを分析するために、交通参加者の軌跡が交差するシナリオを抽出しました。これらのシナリオは、図 2 に示されている基準車線とルートから抽出されたものです。交通参加者のルートの進入方向と退出方向が異なり、基準車線が幾何学的に…</li><li><strong>ページ 6</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の交通安全に関する調査: ケーススタディ... 左パネルのルート。カメラ システムの視野の関係で、システムは、南から来て西に向かって左折する交通参加者と、西から来て右折する交通参加者を検出しないことに注意してください。図 4. 測定サイト Bestensee と、(左) 4 つの異な…</li><li><strong>ページ 7</strong>: クリツケら。 (2025) 軌跡データを用いた農村部の交通安全に関する調査: 事例研究... 3. 結果 以下に、両測定サイトの分析結果を示します。これには、両方のサイトの一般的な交通量と速度の分布に加え、測定サイトのペッツでの交差点の動作と測定サイトのベステンゼーでの追い越しの動作が含まれます。最後に、データから特定された交通安全に関…</li><li><strong>ページ 8</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全に関する調査: ケーススタディ... 図 5. 両方の週の日中ごとに集計された、両方の測定サイト (行) の日ベース (列) での自動車交通の交通量分布 (グレースケール コード)。表 1 平日の時間当たり交通量の概要と交通参加者階級別 月曜 火曜 水曜 木曜 金曜 土…</li><li><strong>ページ 9</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全性の調査: ケーススタディ... 図 7. 測定の両週のルートごとの交通量分布 図 8. 2 つの主要ルートと測定サイトの両週の 1 日あたりの交通量分布は、擬似 R2 = 0.712 で強い適合性を示し、交通量の分散の約 71.2% が予測変数によって説明されることを…</li><li><strong>ページ 10</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全に関する調査: ケーススタディ... 表 2. 時間帯間の交通量を比較した 4 つの仮説検定の結果 条件 β (対数比) p 値 95 % CI 結論 NorthSouth ルートのベステンゼーでの午前と午後 −0.8677 &lt; 0.001 ( −0.942, −0.7…</li><li><strong>ページ 11</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全性の調査: ケーススタディ... 表 3. 2 つの主要ルート間の速度を比較する 3 つの仮説 t 検定の結果 条件 β p 値 95 % CI 結論 自動車の SouthNorth 対 NorthSouth 1.78 ± 0.076 &lt; 0.001 (1.632, 1…</li><li><strong>ページ 12</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全に関する調査: ケーススタディ... 図 11. 測定サイト Pätz における横断シナリオの PET の分布。上: 符号付き PET 値の分布。下: 累積絶対 PET 値分布 連邦道路の利用者は優先権を放棄し、積極的にブレーキをかけて危機的状況を防止しました。図 12…</li><li><strong>ページ 13</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全性の調査: ケーススタディ... 図 13. 市内への追い越しシナリオ (左) と市外への追い越しシナリオ (右) における交通参加者間の平均横距離の累積分布は低くなりますが、この効果は統計的に有意ではありません (β = −0.0937、SE = 0.057、p =…</li><li><strong>ページ 14</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全性の調査: ケーススタディ... 表 4. 走行方向にわたる追い越し距離を比較する 4 つの仮説 t 検定の結果 条件 β p 値 95 % CI 結論 MRU の SouthNorth 対 NorthSouth −0.2131 ± 0.062 &lt; 0.001 ( −0…</li><li><strong>ページ 15</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全に関する調査: ケーススタディ... 図 15. トラックとバスは、曲がるときに対向車線に突っ込む傾向があります。図 16. 測定サイト Pätz でバックする 3 人の交通参加者。主要道路。図 18 の下の行に 2 つの例を示します。このうち 8 人 (うち 2 人は…</li><li><strong>ページ 16</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全に関する調査: ケーススタディ... 図 17. 連邦道路での測定キャンペーン中に観察された歩行者。図 18. 連邦道路での測定キャンペーン中に観察された野生動物。バスは交通安全に大きな影響を与えます。これらの車両が連邦道路と側道の両方に曲がるときに対向車線に横切る傾向…</li><li><strong>ページ 17</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の交通安全に関する調査: ケーススタディ... 今後、慎重に運転し、田舎の環境での侵入に備えてください。追い越しシナリオの分析により、自転車と電動車両とでは横方向の距離に大きな違いがあることが明らかになりました。自転車が町の外を走行するときに追い越される距離は、MRU を追い越すとき…</li><li><strong>ページ 18</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の道路交通安全に関する調査: ケーススタディ... 一般化可能性に影響を与える可能性がある地理的範囲と特定の検出制約 (歩行者の分類など)。今後の研究では、より高い速度制限（最大 100 km/h）やさまざまなインフラストラクチャ構成の地域を含む、より広範囲の農村環境にアプローチを拡…</li><li><strong>ページ 19</strong>: クリツケら。 (2025) 軌跡データを使用した農村部の交通安全に関する調査: ケーススタディ... 参考文献 Campbell, J. L.、Lichty, M. G.、Brown, J. L.、Richard, C. M.、Graving, J. S.、Graham, J.、O’Laughlin, M.、Torbic, D.、Har…</li>
+  </ol>
+</section>
+
 </main>
+
+  <script>
+    (function () {
+      const storagePrefix = "sideBySidePrint.";
+      const body = document.body;
+      const menuWrap = document.getElementById("sideHeaderActions");
+      const menuToggle = document.getElementById("sideMenuToggle");
+      const printButton = document.getElementById("sidePrintButton");
+      const printSummary = document.getElementById("sidePrintSummary");
+      const printDuplex = document.getElementById("sidePrintDuplex");
+      const printRules = document.getElementById("sidePrintRules");
+      const printMode = document.getElementById("sidePrintMode");
+      const printModeExit = document.getElementById("sidePrintModeExit");
+      const printModePrint = document.getElementById("sidePrintModePrint");
+      const orientationButtons = Array.from(document.querySelectorAll("[data-print-orientation]"));
+      let printOrientation = localStorage.getItem(storagePrefix + "orientation") || "landscape";
+
+      if (window.parent !== window) body.classList.add("embedded-frame");
+
+      function storedBoolean(key) {
+        return localStorage.getItem(storagePrefix + key) === "true";
+      }
+
+      function setMenuOpen(open) {
+        if (!menuWrap || !menuToggle) return;
+        menuWrap.classList.toggle("menu-open", open);
+        menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+
+      function currentOptions() {
+        return {
+          orientation: printOrientation === "portrait" ? "portrait" : "landscape",
+          summary: Boolean(printSummary && printSummary.checked),
+          duplex: Boolean(printDuplex && printDuplex.checked),
+          rules: Boolean(printRules && printRules.checked),
+          printMode: Boolean(printMode && printMode.checked),
+        };
+      }
+
+      function writePageStyle(options) {
+        const style = document.getElementById("sideBySidePrintPageStyle") || document.createElement("style");
+        style.id = "sideBySidePrintPageStyle";
+        const size = options.orientation === "portrait" ? "A4 portrait" : "A4 landscape";
+        const margin = options.orientation === "portrait" ? "12mm" : "10mm";
+        const duplex = options.duplex
+          ? "@page :left { margin-left: 16mm; margin-right: 10mm; } @page :right { margin-left: 10mm; margin-right: 16mm; }"
+          : "";
+        style.textContent = "@page { size: " + size + "; margin: " + margin + "; } " + duplex;
+        if (!style.parentElement) document.head.appendChild(style);
+      }
+
+      function applyViewerDisplayOptions(rawOptions) {
+        const options = rawOptions || {};
+        if (options.orientation === "portrait" || options.orientation === "landscape") {
+          printOrientation = options.orientation;
+        }
+        if (printSummary && Object.prototype.hasOwnProperty.call(options, "summary")) {
+          printSummary.checked = Boolean(options.summary);
+        }
+        if (printDuplex && Object.prototype.hasOwnProperty.call(options, "duplex")) {
+          printDuplex.checked = Boolean(options.duplex);
+        }
+        if (printRules && Object.prototype.hasOwnProperty.call(options, "rules")) {
+          printRules.checked = Boolean(options.rules);
+        }
+        if (printMode && Object.prototype.hasOwnProperty.call(options, "printMode")) {
+          printMode.checked = Boolean(options.printMode);
+        }
+
+        const normalized = currentOptions();
+        body.classList.toggle("print-portrait", normalized.orientation === "portrait");
+        body.classList.toggle("print-landscape", normalized.orientation !== "portrait");
+        body.classList.toggle("print-with-summary", normalized.summary);
+        body.classList.toggle("print-rules", normalized.rules);
+        body.classList.toggle("print-mode", normalized.printMode);
+        writePageStyle(normalized);
+
+        localStorage.setItem(storagePrefix + "orientation", normalized.orientation);
+        localStorage.setItem(storagePrefix + "summary", normalized.summary ? "true" : "false");
+        localStorage.setItem(storagePrefix + "duplex", normalized.duplex ? "true" : "false");
+        localStorage.setItem(storagePrefix + "rules", normalized.rules ? "true" : "false");
+
+        for (const button of orientationButtons) {
+          const active = button.dataset.printOrientation === normalized.orientation;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-pressed", active ? "true" : "false");
+        }
+      }
+
+      function printWithViewerOptions(options) {
+        applyViewerDisplayOptions(options || {});
+        setMenuOpen(false);
+        window.setTimeout(() => {
+          window.focus();
+          window.print();
+        }, 50);
+      }
+
+      if (printSummary) printSummary.checked = storedBoolean("summary");
+      if (printDuplex) printDuplex.checked = storedBoolean("duplex");
+      if (printRules) printRules.checked = storedBoolean("rules");
+      if (printMode) printMode.checked = false;
+
+      for (const button of orientationButtons) {
+        button.addEventListener("click", () => {
+          applyViewerDisplayOptions({ orientation: button.dataset.printOrientation });
+        });
+      }
+      for (const checkbox of [printSummary, printDuplex, printRules, printMode]) {
+        if (checkbox) checkbox.addEventListener("change", () => applyViewerDisplayOptions(currentOptions()));
+      }
+      if (menuToggle) {
+        menuToggle.addEventListener("click", () => {
+          setMenuOpen(!menuWrap.classList.contains("menu-open"));
+        });
+      }
+      if (printButton) {
+        printButton.addEventListener("click", () => printWithViewerOptions(currentOptions()));
+      }
+      if (printModeExit) {
+        printModeExit.addEventListener("click", () => applyViewerDisplayOptions({ ...currentOptions(), printMode: false }));
+      }
+      if (printModePrint) {
+        printModePrint.addEventListener("click", () => printWithViewerOptions(currentOptions()));
+      }
+      document.addEventListener("click", (event) => {
+        if (menuWrap && !menuWrap.contains(event.target)) setMenuOpen(false);
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && printMode && printMode.checked) {
+          applyViewerDisplayOptions({ ...currentOptions(), printMode: false });
+          return;
+        }
+        if (event.key === "Escape") setMenuOpen(false);
+      });
+      window.addEventListener("message", (event) => {
+        const data = event.data || {};
+        if (data.type === "pdf-viewer-display-options") {
+          applyViewerDisplayOptions(data.options || {});
+        } else if (data.type === "pdf-viewer-print") {
+          printWithViewerOptions(data.options || {});
+        }
+      });
+
+      window.applyViewerDisplayOptions = applyViewerDisplayOptions;
+      window.printWithViewerOptions = printWithViewerOptions;
+      applyViewerDisplayOptions(currentOptions());
+    })();
+  </script>
+
 
 <style id="viewer-page-close-style">
   .viewer-page-close-button {

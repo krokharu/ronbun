@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>日本語訳: Drivers passing cyclists How does sight distance affect safety Results from a naturalistic study</title>
   <style>
+
     :root {
       color-scheme: light;
       --border: #d7dde5;
@@ -12,6 +13,8 @@
       --muted: #52606d;
       --guide-bg: #f5f7fa;
       --guide-border: #6b8faf;
+      --panel: #f8fafc;
+      --rule: #9ca3af;
     }
     body {
       color: var(--ink);
@@ -20,20 +23,99 @@
       margin: 0;
       background: #ffffff;
     }
-    header {
+    .site-header {
       border-bottom: 1px solid var(--border);
       margin: 0 auto;
       max-width: 1480px;
       padding: 24px 24px 18px;
     }
-    header h1 {
+    .header-shell {
+      align-items: start;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .header-copy h1 {
       font-size: 1.55rem;
       line-height: 1.35;
       margin: 0 0 0.75rem;
     }
-    header ul {
+    .header-copy ul {
       margin: 0;
       padding-left: 1.2rem;
+    }
+    .header-actions {
+      position: relative;
+    }
+    .menu-button,
+    .print-button,
+    .orientation-button {
+      appearance: none;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+    }
+    .menu-button {
+      min-width: 92px;
+      padding: 0.55rem 0.8rem;
+    }
+    .side-menu {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+      display: none;
+      min-width: 260px;
+      padding: 12px;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      z-index: 10;
+    }
+    .header-actions.menu-open .side-menu {
+      display: block;
+    }
+    .menu-label {
+      color: var(--muted);
+      display: block;
+      font-size: 0.82rem;
+      line-height: 1.35;
+      margin: 0 0 0.45rem;
+    }
+    .orientation-group {
+      display: grid;
+      gap: 6px;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 0.7rem;
+    }
+    .orientation-button {
+      padding: 0.45rem 0.7rem;
+    }
+    .orientation-button.active {
+      background: #243447;
+      border-color: #243447;
+      color: #ffffff;
+    }
+    .option-row {
+      align-items: center;
+      display: flex;
+      gap: 0.55rem;
+      margin: 0.55rem 0;
+    }
+    .option-row input {
+      height: 1rem;
+      width: 1rem;
+    }
+    .print-button {
+      background: #243447;
+      border-color: #243447;
+      color: #ffffff;
+      margin-top: 0.55rem;
+      padding: 0.55rem 0.75rem;
+      width: 100%;
     }
     main {
       margin: 0 auto;
@@ -100,10 +182,202 @@
       border: 1px solid var(--border);
       padding: 1rem;
     }
+    .print-title-page,
+    .print-summary-page {
+      display: none;
+    }
+    .side-print-mode-bar {
+      align-items: center;
+      background: #243447;
+      color: #ffffff;
+      display: none;
+      gap: 10px;
+      justify-content: space-between;
+      min-height: 46px;
+      padding: 8px 14px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .side-print-mode-bar span {
+      font-weight: 700;
+    }
+    .side-print-mode-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .side-print-mode-bar button {
+      appearance: none;
+      background: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 8px;
+      color: #243447;
+      cursor: pointer;
+      font: inherit;
+      min-height: 32px;
+      padding: 0 12px;
+    }
+    .side-print-mode-bar .primary {
+      background: #ffffff;
+      color: #123c69;
+      font-weight: 700;
+    }
+    .print-title-page h1,
+    .print-summary-page h2 {
+      line-height: 1.35;
+      margin: 0 0 1rem;
+    }
+    .print-title-meta {
+      color: var(--muted);
+      margin-top: 1.5rem;
+    }
+    body.print-rules .page-pair {
+      border-bottom-color: var(--rule);
+    }
+    body.print-rules .page-visual,
+    body.print-rules .page-translation {
+      border: 1px solid var(--rule);
+      box-sizing: border-box;
+      padding: 14px;
+    }
+    body.print-rules h1,
+    body.print-rules h2,
+    body.print-rules h3 {
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 8px;
+    }
+    body.print-rules p,
+    body.print-rules li {
+      --rule-row-height: 1.75em;
+      background-image: linear-gradient(
+        to bottom,
+        transparent calc(var(--rule-row-height) - 1px),
+        rgba(156, 163, 175, 0.8) calc(var(--rule-row-height) - 1px)
+      );
+      background-origin: content-box;
+      background-clip: content-box;
+      background-repeat: repeat-y;
+      background-size: 100% var(--rule-row-height);
+      padding-bottom: 0.35em;
+    }
+    body.print-mode {
+      background: #d8dee8;
+      font-size: 10pt;
+      line-height: 1.5;
+      padding: 0 18px 24px;
+    }
+    body.print-mode:not(.embedded-frame) .side-print-mode-bar {
+      display: flex;
+    }
+    body.print-mode .site-header {
+      display: none;
+    }
+    body.print-mode main {
+      margin: 18px auto 0;
+      max-width: none;
+      padding: 0;
+    }
+    body.print-mode h2 {
+      font-size: 12pt;
+    }
+    body.print-mode h3 {
+      font-size: 10pt;
+    }
+    body.print-mode .page-pair,
+    body.print-mode .print-title-page,
+    body.print-mode .print-summary-page {
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+      box-sizing: border-box;
+      margin-bottom: 18px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 34px 38px;
+    }
+    body.print-mode .sticky {
+      position: static;
+    }
+    body.print-mode img {
+      max-height: none;
+    }
+    body.print-mode.print-landscape .page-pair {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: 48% 1fr;
+      max-width: 1123px;
+      min-height: 794px;
+      page-break-after: auto;
+    }
+    body.print-mode.print-landscape .page-translation {
+      font-size: 7.2pt;
+      line-height: 1.24;
+    }
+    body.print-mode.print-landscape .page-translation h2,
+    body.print-mode.print-landscape .page-translation h3 {
+      font-size: 8.4pt;
+    }
+    body.print-mode.print-landscape img {
+      max-height: 680px;
+    }
+    body.print-mode.print-portrait .print-title-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 794px;
+      min-height: 1123px;
+    }
+    body.print-mode.print-portrait .page-pair {
+      background: transparent;
+      box-shadow: none;
+      display: contents;
+      padding: 0;
+    }
+    body.print-mode.print-portrait .page-visual,
+    body.print-mode.print-portrait .page-translation {
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+      box-sizing: border-box;
+      margin: 0 auto 18px;
+      max-width: 794px;
+      min-height: 1123px;
+      padding: 34px 38px;
+    }
+    body.print-mode.print-portrait .page-visual {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    body.print-mode.print-portrait .page-translation {
+      font-size: 8.8pt;
+      line-height: 1.38;
+    }
+    body.print-mode.print-portrait img {
+      max-height: 960px;
+    }
+    body.print-mode.print-with-summary .print-summary-page {
+      display: block;
+      max-width: 794px;
+      min-height: 1123px;
+    }
+    body.print-mode.print-with-summary.print-landscape .print-summary-page {
+      max-width: 1123px;
+      min-height: 794px;
+    }
     @media (max-width: 900px) {
-      header, main {
+      .site-header,
+      main {
         padding-left: 14px;
         padding-right: 14px;
+      }
+      .header-shell {
+        grid-template-columns: 1fr;
+      }
+      .header-actions {
+        justify-self: start;
+      }
+      .side-menu {
+        left: 0;
+        right: auto;
       }
       .page-pair {
         grid-template-columns: 1fr;
@@ -116,9 +390,42 @@
       }
     }
     @media print {
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+      html,
+      body {
+        background: #ffffff !important;
+      }
+      body {
+        font-size: 10pt;
+        line-height: 1.5;
+      }
+      .site-header {
+        display: none !important;
+      }
+      main {
+        margin: 0;
+        max-width: none;
+        padding: 0;
+      }
+      h2 {
+        font-size: 12pt;
+      }
+      h3 {
+        font-size: 10pt;
+      }
+      p {
+        margin-bottom: 0.55rem;
+      }
+      ul {
+        margin-bottom: 0.65rem;
+      }
       .page-pair {
-        break-inside: avoid;
-        grid-template-columns: 48% 1fr;
+        border: 0;
+        margin: 0;
+        padding: 0;
       }
       .sticky {
         position: static;
@@ -126,7 +433,125 @@
       img {
         max-height: none;
       }
+      figcaption {
+        font-size: 8pt;
+      }
+      body.print-landscape .page-pair {
+        break-after: page;
+        break-inside: avoid;
+        display: grid;
+        gap: 7mm;
+        grid-template-columns: 48% 1fr;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+        page-break-inside: avoid;
+      }
+      body.print-landscape .page-visual,
+      body.print-landscape .page-translation {
+        align-self: start;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      body.print-landscape .page-translation {
+        font-size: 7.2pt;
+        line-height: 1.24;
+      }
+      body.print-landscape .page-translation h2,
+      body.print-landscape .page-translation h3 {
+        font-size: 8.4pt;
+      }
+      body.print-landscape .page-translation > ul:first-of-type {
+        background: transparent;
+        border-left-width: 2px;
+        padding: 0.35rem 0.5rem 0.35rem 0.85rem;
+      }
+      body.print-landscape img {
+        max-height: calc(100vh - 18mm);
+      }
+      body.print-portrait .print-title-page {
+        break-after: page;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+      }
+      body.print-portrait .print-title-page h1 {
+        font-size: 22pt;
+      }
+      body.print-portrait .page-pair {
+        display: block;
+      }
+      body.print-portrait .page-visual,
+      body.print-portrait .page-translation {
+        break-after: page;
+        box-sizing: border-box;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+      }
+      body.print-portrait .page-visual {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      body.print-portrait .page-translation {
+        font-size: 8.8pt;
+        line-height: 1.38;
+      }
+      body.print-portrait img {
+        max-height: calc(100vh - 24mm);
+      }
+      body.print-with-summary .print-summary-page {
+        break-before: page;
+        box-sizing: border-box;
+        display: block;
+        min-height: calc(100vh - 4mm);
+        page-break-before: always;
+      }
+      body.print-with-summary .print-summary-page li {
+        margin-bottom: 0.5rem;
+      }
+      body.print-rules .print-title-page,
+      body.print-rules .print-summary-page,
+      body.print-rules .page-visual,
+      body.print-rules .page-translation {
+        border: 1px solid var(--rule);
+        padding: 4mm;
+      }
+      body.print-rules p,
+      body.print-rules li {
+        --rule-row-height: 1.5em;
+      }
+      body.print-rules.print-landscape .page-translation p,
+      body.print-rules.print-landscape .page-translation li {
+        --rule-row-height: 1.24em;
+      }
+      body.print-rules.print-portrait .page-translation p,
+      body.print-rules.print-portrait .page-translation li {
+        --rule-row-height: 1.38em;
+      }
+      * {
+        box-shadow: none !important;
+      }
+      .side-print-mode-bar {
+        display: none !important;
+      }
+      body.print-mode {
+        background: #ffffff !important;
+        padding: 0;
+      }
+      body.print-mode .page-pair,
+      body.print-mode .print-title-page,
+      body.print-mode .print-summary-page,
+      body.print-mode .page-visual,
+      body.print-mode .page-translation {
+        box-shadow: none;
+        margin: 0;
+        max-width: none;
+      }
     }
+
   </style>
 <!-- zotero-connector-head:start -->
 <meta name="citation_title" content="Drivers passing cyclists: How does sight distance affect safety? Results from a naturalistic study" data-zotero-connector="server">
@@ -171,11 +596,42 @@
 <!-- zotero-connector-body:start -->
 <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Drivers+passing+cyclists%3A+How+does+sight+distance+affect+safety%3F+Results+from+a+naturalistic+study&amp;rft.jtitle=Journal+of+Safety+Research&amp;rft.date=2023&amp;rft.volume=87&amp;rft.pages=76-85&amp;rft_id=info%3Adoi%2F10.1016%2Fj.jsr.2023.09.006&amp;rft.au=Alexander+Rasch&amp;rft.au=Yury+Tarakanov&amp;rft.au=Gustav+Tellwe&amp;rft.au=Marco+Dozza" data-zotero-connector="server" hidden></span>
 <!-- zotero-connector-body:end -->
-<header>
-<h1>日本語訳: Drivers passing cyclists How does sight distance affect safety Results from a naturalistic study</h1>
+<div class="side-print-mode-bar" id="sidePrintModeBar">
+  <span>印刷モード</span>
+  <div class="side-print-mode-actions">
+    <button id="sidePrintModeExit" type="button">解除</button>
+    <button class="primary" id="sidePrintModePrint" type="button" title="印刷画面でPDFとして保存">印刷用PDFを作成</button>
+  </div>
+</div>
+<header class="site-header">
+  <div class="header-shell">
+    <div class="header-copy">
+      <h1>日本語訳: Drivers passing cyclists How does sight distance affect safety Results from a naturalistic study</h1>
 <ul><li>原文ファイル: Drivers passing cyclists How does sight distance affect safety Results from a naturalistic study.pdf</li><li>ページ数: 10</li><li>作成日時: 2026-06-08 04:54:06</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+    </div>
+    <div class="header-actions" id="sideHeaderActions">
+      <button class="menu-button" id="sideMenuToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sidePrintMenu">メニュー</button>
+      <div class="side-menu" id="sidePrintMenu" role="menu" aria-label="印刷メニュー">
+        <span class="menu-label">印刷方向</span>
+        <div class="orientation-group" role="group" aria-label="印刷方向">
+          <button class="orientation-button" type="button" data-print-orientation="portrait" aria-pressed="false">縦</button>
+          <button class="orientation-button" type="button" data-print-orientation="landscape" aria-pressed="true">横</button>
+        </div>
+        <label class="option-row"><input id="sidePrintSummary" type="checkbox"> 要約付き</label>
+        <label class="option-row"><input id="sidePrintDuplex" type="checkbox"> 両面向け余白</label>
+        <label class="option-row"><input id="sidePrintRules" type="checkbox"> 罫線あり</label>
+        <label class="option-row"><input id="sidePrintMode" type="checkbox"> 印刷モード</label>
+        <button class="print-button" id="sidePrintButton" type="button" title="印刷画面でPDFとして保存">印刷用PDFを作成</button>
+      </div>
+    </div>
+  </div>
 </header>
 <main>
+<section class="print-title-page" aria-label="タイトル">
+  <h1>日本語訳: Drivers passing cyclists How does sight distance affect safety Results from a naturalistic study</h1>
+  <p>原文PDFと日本語訳の見開き印刷用ページです。</p>
+  <ul class="print-title-meta"><li>原文ファイル: Drivers passing cyclists How does sight distance affect safety Results from a naturalistic study.pdf</li><li>ページ数: 10</li><li>作成日時: 2026-06-08 04:54:06</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+</section>
 
 <section class="page-pair" id="page-1">
   <aside class="page-visual">
@@ -343,7 +799,167 @@
   </article>
 </section>
 
+
+<section class="print-summary-page" aria-label="要約">
+  <h2>要約</h2>
+  <p>日本語訳: Drivers passing cyclists How does sight distance affect safety Results from a naturalistic study</p>
+  <ul><li>原文ファイル: Drivers passing cyclists How does sight distance affect safety Results from a naturalistic study.pdf</li><li>ページ数: 10</li><li>作成日時: 2026-06-08 04:54:06</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+  <ol>
+    <li><strong>ページ 1</strong>: 自転車とすれ違うドライバー: 視距離は安全性にどのような影響を与えますか?自然主義的研究の結果 Alexander Rasch a,⇑、Yury Tarakanov b、Gustav Tellwe b、Marco Dozza a a チャルマーズ工科大学機械海事科学部、Hörselgången 4、41756 Göteborg、Swed…</li><li><strong>ページ 2</strong>: 安定性が低下すると、自転車に乗っている人が地面に落ちて怪我をする可能性があり、安全性の認識が低下すると、自転車に乗る意欲がなくなる可能性があります (Sanders, 2015)。最近の研究では、追い越し事故、特に追い越し車両が自転車を追い越すためにハンドルを切った後の段階での衝突の重要性が示されています。ディアス・フェルナンデス 他(…</li><li><strong>ページ 3</strong>: 2.2.データの後処理と検証 次の基準によって追い越し操作を特定しました: (1) 車と自転車が同じ方向に走行していた、および (2) 車と自転車がちょうど隣り合う追い越しの瞬間があった。道路の観察箇所にはトラックやバスがあまりいなかったため、自動車に焦点を当てました。複数のサイクリストが追い抜かれたイベントは、データ内でかなり少数であ…</li><li><strong>ページ 4</strong>: (MVNormal) 分布、分布平均 l = lLC をパラメータ化します。 lV /C2/C3 T は次のようになります: LCs i Vs ego;i ! /C24 MVNormal lLC;i lV;i ! ; r2 LC q rLC rV q rLC rV r2 V !&quot;# ð1Þ lLC;i ⁄ bLC 0 þ bLC vis…</li><li><strong>ページ 5</strong>: 定性的には、ドライバーは高速走行時により大きな車間距離で追い越しをしました (図 5)。しかし、特に低い車高で行われる操作では、サイクリストは追い越し中に高いリスクを認識すると予測されました（図5）。 3.2.モデリング結果 図 6 は、モデルの事後予測分布を、モデルのフィッティングに使用されたデータで重ねて示しています。このモデルは、…</li><li><strong>ページ 6</strong>: 対向車の有無を判断するために使用される、対向車までの距離。さらに、私たちのモデルは、幅の広い車はより低い車間距離を維持する一方で、必ずしもそれに応じて速度を低下させるわけではないことを示した以前の研究を確認しました (Dozza et al., 2016)。追い越し速度も明らかに自転車の速度に依存しており、これは道路の傾斜によりどちらの…</li><li><strong>ページ 7</strong>: 4.3.実用的な応用 サイクリストの客観的および主観的な認識リスクに対処するいくつかの対策が、私たちの結果から恩恵を受ける可能性があります。たとえば、インフラ設計では、田舎の道路、特に見通し距離が短く、対向車が頻繁に来る場所では、自転車を自動車交通から分離することを目指す必要があります。さらに、路肩が自転車が通行できるほど広くない場合、…</li><li><strong>ページ 8</strong>: 自然なドライバーの行動を実現します。同様に、Abe et al.が示唆しているように、より人間らしくなり、おそらくより受け入れられるよう、サイクリストを追い越す方法を自動運転に提供する可能性があります。 （2018年）。たとえば、サイクリストを追い越す自動運転車は、横方向の車間距離を大きく確保できない場合は、速度を低く保つ必要があります…</li><li><strong>ページ 9</strong>: 参考文献 Abe, G.、Sato, K.、Itoh, M. (2018).自動運転システムに対するドライバーの信頼: 追い越しと追い越しの場合。 IEEE Transactions on Human-Machine Systems、48 (1)、85 ～ 94。 https://doi.org/10.1109/THMS.2017.27…</li><li><strong>ページ 10</strong>: マルコ・ドッツァは博士号を取得しました。 2007 年に米国オレゴン州ポートランドのオレゴン健康科学大学と協力して、イタリアのボローニャ大学で生物工学の学位を取得しました。卒業後は、ボルボ グループ内の研究革新会社であるボルボ テクノロジーでシステム開発者として働きました。 2009 年からスウェーデンのヨーテボリにあるチャルマーズ工科…</li>
+  </ol>
+</section>
+
 </main>
+
+  <script>
+    (function () {
+      const storagePrefix = "sideBySidePrint.";
+      const body = document.body;
+      const menuWrap = document.getElementById("sideHeaderActions");
+      const menuToggle = document.getElementById("sideMenuToggle");
+      const printButton = document.getElementById("sidePrintButton");
+      const printSummary = document.getElementById("sidePrintSummary");
+      const printDuplex = document.getElementById("sidePrintDuplex");
+      const printRules = document.getElementById("sidePrintRules");
+      const printMode = document.getElementById("sidePrintMode");
+      const printModeExit = document.getElementById("sidePrintModeExit");
+      const printModePrint = document.getElementById("sidePrintModePrint");
+      const orientationButtons = Array.from(document.querySelectorAll("[data-print-orientation]"));
+      let printOrientation = localStorage.getItem(storagePrefix + "orientation") || "landscape";
+
+      if (window.parent !== window) body.classList.add("embedded-frame");
+
+      function storedBoolean(key) {
+        return localStorage.getItem(storagePrefix + key) === "true";
+      }
+
+      function setMenuOpen(open) {
+        if (!menuWrap || !menuToggle) return;
+        menuWrap.classList.toggle("menu-open", open);
+        menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+
+      function currentOptions() {
+        return {
+          orientation: printOrientation === "portrait" ? "portrait" : "landscape",
+          summary: Boolean(printSummary && printSummary.checked),
+          duplex: Boolean(printDuplex && printDuplex.checked),
+          rules: Boolean(printRules && printRules.checked),
+          printMode: Boolean(printMode && printMode.checked),
+        };
+      }
+
+      function writePageStyle(options) {
+        const style = document.getElementById("sideBySidePrintPageStyle") || document.createElement("style");
+        style.id = "sideBySidePrintPageStyle";
+        const size = options.orientation === "portrait" ? "A4 portrait" : "A4 landscape";
+        const margin = options.orientation === "portrait" ? "12mm" : "10mm";
+        const duplex = options.duplex
+          ? "@page :left { margin-left: 16mm; margin-right: 10mm; } @page :right { margin-left: 10mm; margin-right: 16mm; }"
+          : "";
+        style.textContent = "@page { size: " + size + "; margin: " + margin + "; } " + duplex;
+        if (!style.parentElement) document.head.appendChild(style);
+      }
+
+      function applyViewerDisplayOptions(rawOptions) {
+        const options = rawOptions || {};
+        if (options.orientation === "portrait" || options.orientation === "landscape") {
+          printOrientation = options.orientation;
+        }
+        if (printSummary && Object.prototype.hasOwnProperty.call(options, "summary")) {
+          printSummary.checked = Boolean(options.summary);
+        }
+        if (printDuplex && Object.prototype.hasOwnProperty.call(options, "duplex")) {
+          printDuplex.checked = Boolean(options.duplex);
+        }
+        if (printRules && Object.prototype.hasOwnProperty.call(options, "rules")) {
+          printRules.checked = Boolean(options.rules);
+        }
+        if (printMode && Object.prototype.hasOwnProperty.call(options, "printMode")) {
+          printMode.checked = Boolean(options.printMode);
+        }
+
+        const normalized = currentOptions();
+        body.classList.toggle("print-portrait", normalized.orientation === "portrait");
+        body.classList.toggle("print-landscape", normalized.orientation !== "portrait");
+        body.classList.toggle("print-with-summary", normalized.summary);
+        body.classList.toggle("print-rules", normalized.rules);
+        body.classList.toggle("print-mode", normalized.printMode);
+        writePageStyle(normalized);
+
+        localStorage.setItem(storagePrefix + "orientation", normalized.orientation);
+        localStorage.setItem(storagePrefix + "summary", normalized.summary ? "true" : "false");
+        localStorage.setItem(storagePrefix + "duplex", normalized.duplex ? "true" : "false");
+        localStorage.setItem(storagePrefix + "rules", normalized.rules ? "true" : "false");
+
+        for (const button of orientationButtons) {
+          const active = button.dataset.printOrientation === normalized.orientation;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-pressed", active ? "true" : "false");
+        }
+      }
+
+      function printWithViewerOptions(options) {
+        applyViewerDisplayOptions(options || {});
+        setMenuOpen(false);
+        window.setTimeout(() => {
+          window.focus();
+          window.print();
+        }, 50);
+      }
+
+      if (printSummary) printSummary.checked = storedBoolean("summary");
+      if (printDuplex) printDuplex.checked = storedBoolean("duplex");
+      if (printRules) printRules.checked = storedBoolean("rules");
+      if (printMode) printMode.checked = false;
+
+      for (const button of orientationButtons) {
+        button.addEventListener("click", () => {
+          applyViewerDisplayOptions({ orientation: button.dataset.printOrientation });
+        });
+      }
+      for (const checkbox of [printSummary, printDuplex, printRules, printMode]) {
+        if (checkbox) checkbox.addEventListener("change", () => applyViewerDisplayOptions(currentOptions()));
+      }
+      if (menuToggle) {
+        menuToggle.addEventListener("click", () => {
+          setMenuOpen(!menuWrap.classList.contains("menu-open"));
+        });
+      }
+      if (printButton) {
+        printButton.addEventListener("click", () => printWithViewerOptions(currentOptions()));
+      }
+      if (printModeExit) {
+        printModeExit.addEventListener("click", () => applyViewerDisplayOptions({ ...currentOptions(), printMode: false }));
+      }
+      if (printModePrint) {
+        printModePrint.addEventListener("click", () => printWithViewerOptions(currentOptions()));
+      }
+      document.addEventListener("click", (event) => {
+        if (menuWrap && !menuWrap.contains(event.target)) setMenuOpen(false);
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && printMode && printMode.checked) {
+          applyViewerDisplayOptions({ ...currentOptions(), printMode: false });
+          return;
+        }
+        if (event.key === "Escape") setMenuOpen(false);
+      });
+      window.addEventListener("message", (event) => {
+        const data = event.data || {};
+        if (data.type === "pdf-viewer-display-options") {
+          applyViewerDisplayOptions(data.options || {});
+        } else if (data.type === "pdf-viewer-print") {
+          printWithViewerOptions(data.options || {});
+        }
+      });
+
+      window.applyViewerDisplayOptions = applyViewerDisplayOptions;
+      window.printWithViewerOptions = printWithViewerOptions;
+      applyViewerDisplayOptions(currentOptions());
+    })();
+  </script>
+
 
 <style id="viewer-page-close-style">
   .viewer-page-close-button {
