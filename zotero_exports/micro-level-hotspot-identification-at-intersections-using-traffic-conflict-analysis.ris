@@ -1,0 +1,19 @@
+TY  - JOUR
+T1  - Micro-level hotspot identification at intersections using traffic conflict analysis
+AU  - Park, Nuri
+AU  - Park, Juneyoung
+AU  - Joo, Yang-Jun
+AU  - Abdel-Aty, Mohamed
+JF  - Accident Analysis and Prevention
+JO  - Accident Analysis and Prevention
+VL  - 220
+SP  - 108167
+PY  - 2025
+DO  - 10.1016/j.aap.2025.108167
+UR  - https://doi.org/10.1016/j.aap.2025.108167
+AB  - Traditional approaches to identifying traffic crash hotspots have mainly focused on determining dangerous in tersections within road networks, overlooking variations in crash risk within intersections. The micro-level crash hotspot analysis addresses this issue by identifying specific high-risk areas with precision. This study aims to identify micro-level hotspots within three signalized intersections using traffic conflict measures derived from drone video. An algorithm calculates conflicts based on various vehicle sizes and conflict angles. The traffic conflict measures in this study include time-to-collision (TTC), the time to a potential collision assuming constant speed; modified time-to-collision (MTTC), which detects conflicts by assuming constant acceleration; and postencroachment time (PET), the time gap between two vehicles passing the same point. To select the most appropriate conflict measures and determine optimal thresholds at each intersection, we develop crash frequency models using generalized linear modeling (GLM). These selected conflict measures and thresholds are subse quently used to detect micro-level hotspot sections through kernel density. The results demonstrate that the TTC and PET are strongly related to micro-level crash frequencies, with different patterns emerging depending on crash angle and intersection location. Specifically, TTC-based conflicts are highly correlated with rear-end crashes occurring before the stop line, while PET-based conflicts are closely associated with crashes within the intersection, particularly with left-turning movements. This study contributes to intersection safety by identifying traffic conflict measures for micro-level hotspots and offering detailed safety interventions. These interventions include pavement marking enhancements, stop-line location adjustment, extended left-turn bays, or separated bike lanes, which are based on the specific conflict patterns observed in the study.
+KW  - Crash risk hotspot
+KW  - Traffic safety
+KW  - Traffic conflict measures
+KW  - Signalized intersection
+ER  -

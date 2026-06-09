@@ -1,0 +1,18 @@
+TY  - JOUR
+T1  - Real-time conflict risk at signalized intersection using drone video: A random parameters logit model with heterogeneity in means and variances
+AU  - Zhang, Shile
+AU  - Sze, N.N.
+JF  - Accident Analysis and Prevention
+JO  - Accident Analysis and Prevention
+VL  - 207
+SP  - 107739
+PY  - 2024
+DO  - 10.1016/j.aap.2024.107739
+UR  - https://doi.org/10.1016/j.aap.2024.107739
+AB  - Signalized intersections are crash prone. This can be attributed to driver errors, red light running behaviour, and poor coordination of conflicting traffic. It is anticipated that overall crash risk at signalized intersection would increase when mixed traffic like motorcycles is involved. In this study, a real-time prediction model for motorcycle and non-motorcycle involved conflict risk at the signalized intersection is proposed. For example, high-resolution vehicle and motorcycle trajectory data are extracted from drone videos using advanced computer vision techniques. Additionally, conflict types including rear-end, angle, and head-on conflicts are also considered. Then, the multinomial logit approach is adopted to model the propensity of severe and slight vehiclevehicle and vehicle-motorcycle conflicts. Furthermore, the problem of unobserved heterogeneity is addressed using the random parameters model with heterogeneity in means and variances. Results indicate that risk of vehicle-vehicle conflict is significantly associated with vehicle speed and acceleration, and conflict type, and that of vehicle-motorcycle conflict is associated with vehicle speed and acceleration, motorcycle lateral speed, conflict type, and time to green signal. Findings should shed light to the development and implementation of optimal traffic signal time plan and traffic management strategy that can mitigate the potential crash risk, especially involving motorcycles, at the signalized intersection.
+KW  - Conflict severity
+KW  - Multinomial logit model
+KW  - Drone videos
+KW  - Random parameters model
+KW  - Heterogeneity in means and variances
+ER  -
