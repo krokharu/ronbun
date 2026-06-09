@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>日本語訳: Real-time conflict risk at signalized intersection using drone video</title>
   <style>
+
     :root {
       color-scheme: light;
       --border: #d7dde5;
@@ -12,6 +13,8 @@
       --muted: #52606d;
       --guide-bg: #f5f7fa;
       --guide-border: #6b8faf;
+      --panel: #f8fafc;
+      --rule: #9ca3af;
     }
     body {
       color: var(--ink);
@@ -20,20 +23,99 @@
       margin: 0;
       background: #ffffff;
     }
-    header {
+    .site-header {
       border-bottom: 1px solid var(--border);
       margin: 0 auto;
       max-width: 1480px;
       padding: 24px 24px 18px;
     }
-    header h1 {
+    .header-shell {
+      align-items: start;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .header-copy h1 {
       font-size: 1.55rem;
       line-height: 1.35;
       margin: 0 0 0.75rem;
     }
-    header ul {
+    .header-copy ul {
       margin: 0;
       padding-left: 1.2rem;
+    }
+    .header-actions {
+      position: relative;
+    }
+    .menu-button,
+    .print-button,
+    .orientation-button {
+      appearance: none;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+    }
+    .menu-button {
+      min-width: 92px;
+      padding: 0.55rem 0.8rem;
+    }
+    .side-menu {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+      display: none;
+      min-width: 260px;
+      padding: 12px;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      z-index: 10;
+    }
+    .header-actions.menu-open .side-menu {
+      display: block;
+    }
+    .menu-label {
+      color: var(--muted);
+      display: block;
+      font-size: 0.82rem;
+      line-height: 1.35;
+      margin: 0 0 0.45rem;
+    }
+    .orientation-group {
+      display: grid;
+      gap: 6px;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 0.7rem;
+    }
+    .orientation-button {
+      padding: 0.45rem 0.7rem;
+    }
+    .orientation-button.active {
+      background: #243447;
+      border-color: #243447;
+      color: #ffffff;
+    }
+    .option-row {
+      align-items: center;
+      display: flex;
+      gap: 0.55rem;
+      margin: 0.55rem 0;
+    }
+    .option-row input {
+      height: 1rem;
+      width: 1rem;
+    }
+    .print-button {
+      background: #243447;
+      border-color: #243447;
+      color: #ffffff;
+      margin-top: 0.55rem;
+      padding: 0.55rem 0.75rem;
+      width: 100%;
     }
     main {
       margin: 0 auto;
@@ -100,10 +182,202 @@
       border: 1px solid var(--border);
       padding: 1rem;
     }
+    .print-title-page,
+    .print-summary-page {
+      display: none;
+    }
+    .side-print-mode-bar {
+      align-items: center;
+      background: #243447;
+      color: #ffffff;
+      display: none;
+      gap: 10px;
+      justify-content: space-between;
+      min-height: 46px;
+      padding: 8px 14px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .side-print-mode-bar span {
+      font-weight: 700;
+    }
+    .side-print-mode-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .side-print-mode-bar button {
+      appearance: none;
+      background: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 8px;
+      color: #243447;
+      cursor: pointer;
+      font: inherit;
+      min-height: 32px;
+      padding: 0 12px;
+    }
+    .side-print-mode-bar .primary {
+      background: #ffffff;
+      color: #123c69;
+      font-weight: 700;
+    }
+    .print-title-page h1,
+    .print-summary-page h2 {
+      line-height: 1.35;
+      margin: 0 0 1rem;
+    }
+    .print-title-meta {
+      color: var(--muted);
+      margin-top: 1.5rem;
+    }
+    body.print-rules .page-pair {
+      border-bottom-color: var(--rule);
+    }
+    body.print-rules .page-visual,
+    body.print-rules .page-translation {
+      border: 1px solid var(--rule);
+      box-sizing: border-box;
+      padding: 14px;
+    }
+    body.print-rules h1,
+    body.print-rules h2,
+    body.print-rules h3 {
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 8px;
+    }
+    body.print-rules p,
+    body.print-rules li {
+      --rule-row-height: 1.75em;
+      background-image: linear-gradient(
+        to bottom,
+        transparent calc(var(--rule-row-height) - 1px),
+        rgba(156, 163, 175, 0.8) calc(var(--rule-row-height) - 1px)
+      );
+      background-origin: content-box;
+      background-clip: content-box;
+      background-repeat: repeat-y;
+      background-size: 100% var(--rule-row-height);
+      padding-bottom: 0.35em;
+    }
+    body.print-mode {
+      background: #d8dee8;
+      font-size: 10pt;
+      line-height: 1.5;
+      padding: 0 18px 24px;
+    }
+    body.print-mode:not(.embedded-frame) .side-print-mode-bar {
+      display: flex;
+    }
+    body.print-mode .site-header {
+      display: none;
+    }
+    body.print-mode main {
+      margin: 18px auto 0;
+      max-width: none;
+      padding: 0;
+    }
+    body.print-mode h2 {
+      font-size: 12pt;
+    }
+    body.print-mode h3 {
+      font-size: 10pt;
+    }
+    body.print-mode .page-pair,
+    body.print-mode .print-title-page,
+    body.print-mode .print-summary-page {
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+      box-sizing: border-box;
+      margin-bottom: 18px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 34px 38px;
+    }
+    body.print-mode .sticky {
+      position: static;
+    }
+    body.print-mode img {
+      max-height: none;
+    }
+    body.print-mode.print-landscape .page-pair {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: 48% 1fr;
+      max-width: 1123px;
+      min-height: 794px;
+      page-break-after: auto;
+    }
+    body.print-mode.print-landscape .page-translation {
+      font-size: 7.2pt;
+      line-height: 1.24;
+    }
+    body.print-mode.print-landscape .page-translation h2,
+    body.print-mode.print-landscape .page-translation h3 {
+      font-size: 8.4pt;
+    }
+    body.print-mode.print-landscape img {
+      max-height: 680px;
+    }
+    body.print-mode.print-portrait .print-title-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 794px;
+      min-height: 1123px;
+    }
+    body.print-mode.print-portrait .page-pair {
+      background: transparent;
+      box-shadow: none;
+      display: contents;
+      padding: 0;
+    }
+    body.print-mode.print-portrait .page-visual,
+    body.print-mode.print-portrait .page-translation {
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+      box-sizing: border-box;
+      margin: 0 auto 18px;
+      max-width: 794px;
+      min-height: 1123px;
+      padding: 34px 38px;
+    }
+    body.print-mode.print-portrait .page-visual {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    body.print-mode.print-portrait .page-translation {
+      font-size: 8.8pt;
+      line-height: 1.38;
+    }
+    body.print-mode.print-portrait img {
+      max-height: 960px;
+    }
+    body.print-mode.print-with-summary .print-summary-page {
+      display: block;
+      max-width: 794px;
+      min-height: 1123px;
+    }
+    body.print-mode.print-with-summary.print-landscape .print-summary-page {
+      max-width: 1123px;
+      min-height: 794px;
+    }
     @media (max-width: 900px) {
-      header, main {
+      .site-header,
+      main {
         padding-left: 14px;
         padding-right: 14px;
+      }
+      .header-shell {
+        grid-template-columns: 1fr;
+      }
+      .header-actions {
+        justify-self: start;
+      }
+      .side-menu {
+        left: 0;
+        right: auto;
       }
       .page-pair {
         grid-template-columns: 1fr;
@@ -116,9 +390,42 @@
       }
     }
     @media print {
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+      html,
+      body {
+        background: #ffffff !important;
+      }
+      body {
+        font-size: 10pt;
+        line-height: 1.5;
+      }
+      .site-header {
+        display: none !important;
+      }
+      main {
+        margin: 0;
+        max-width: none;
+        padding: 0;
+      }
+      h2 {
+        font-size: 12pt;
+      }
+      h3 {
+        font-size: 10pt;
+      }
+      p {
+        margin-bottom: 0.55rem;
+      }
+      ul {
+        margin-bottom: 0.65rem;
+      }
       .page-pair {
-        break-inside: avoid;
-        grid-template-columns: 48% 1fr;
+        border: 0;
+        margin: 0;
+        padding: 0;
       }
       .sticky {
         position: static;
@@ -126,7 +433,125 @@
       img {
         max-height: none;
       }
+      figcaption {
+        font-size: 8pt;
+      }
+      body.print-landscape .page-pair {
+        break-after: page;
+        break-inside: avoid;
+        display: grid;
+        gap: 7mm;
+        grid-template-columns: 48% 1fr;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+        page-break-inside: avoid;
+      }
+      body.print-landscape .page-visual,
+      body.print-landscape .page-translation {
+        align-self: start;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      body.print-landscape .page-translation {
+        font-size: 7.2pt;
+        line-height: 1.24;
+      }
+      body.print-landscape .page-translation h2,
+      body.print-landscape .page-translation h3 {
+        font-size: 8.4pt;
+      }
+      body.print-landscape .page-translation > ul:first-of-type {
+        background: transparent;
+        border-left-width: 2px;
+        padding: 0.35rem 0.5rem 0.35rem 0.85rem;
+      }
+      body.print-landscape img {
+        max-height: calc(100vh - 18mm);
+      }
+      body.print-portrait .print-title-page {
+        break-after: page;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+      }
+      body.print-portrait .print-title-page h1 {
+        font-size: 22pt;
+      }
+      body.print-portrait .page-pair {
+        display: block;
+      }
+      body.print-portrait .page-visual,
+      body.print-portrait .page-translation {
+        break-after: page;
+        box-sizing: border-box;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+      }
+      body.print-portrait .page-visual {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      body.print-portrait .page-translation {
+        font-size: 8.8pt;
+        line-height: 1.38;
+      }
+      body.print-portrait img {
+        max-height: calc(100vh - 24mm);
+      }
+      body.print-with-summary .print-summary-page {
+        break-before: page;
+        box-sizing: border-box;
+        display: block;
+        min-height: calc(100vh - 4mm);
+        page-break-before: always;
+      }
+      body.print-with-summary .print-summary-page li {
+        margin-bottom: 0.5rem;
+      }
+      body.print-rules .print-title-page,
+      body.print-rules .print-summary-page,
+      body.print-rules .page-visual,
+      body.print-rules .page-translation {
+        border: 1px solid var(--rule);
+        padding: 4mm;
+      }
+      body.print-rules p,
+      body.print-rules li {
+        --rule-row-height: 1.5em;
+      }
+      body.print-rules.print-landscape .page-translation p,
+      body.print-rules.print-landscape .page-translation li {
+        --rule-row-height: 1.24em;
+      }
+      body.print-rules.print-portrait .page-translation p,
+      body.print-rules.print-portrait .page-translation li {
+        --rule-row-height: 1.38em;
+      }
+      * {
+        box-shadow: none !important;
+      }
+      .side-print-mode-bar {
+        display: none !important;
+      }
+      body.print-mode {
+        background: #ffffff !important;
+        padding: 0;
+      }
+      body.print-mode .page-pair,
+      body.print-mode .print-title-page,
+      body.print-mode .print-summary-page,
+      body.print-mode .page-visual,
+      body.print-mode .page-translation {
+        box-shadow: none;
+        margin: 0;
+        max-width: none;
+      }
     }
+
   </style>
 <!-- zotero-connector-head:start -->
 <meta name="citation_title" content="Real-time conflict risk at signalized intersection using drone video: A random parameters logit model with heterogeneity in means and variances" data-zotero-connector="server">
@@ -166,11 +591,42 @@
 <!-- zotero-connector-body:start -->
 <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Real-time+conflict+risk+at+signalized+intersection+using+drone+video%3A+A+random+parameters+logit+model+with+heterogeneity+in+means+and+variances&amp;rft.jtitle=Accident+Analysis+and+Prevention&amp;rft.date=2024&amp;rft.volume=207&amp;rft.pages=107739&amp;rft_id=info%3Adoi%2F10.1016%2Fj.aap.2024.107739&amp;rft.au=Shile+Zhang&amp;rft.au=N.N.+Sze" data-zotero-connector="server" hidden></span>
 <!-- zotero-connector-body:end -->
-<header>
-<h1>日本語訳: Real-time conflict risk at signalized intersection using drone video</h1>
+<div class="side-print-mode-bar" id="sidePrintModeBar">
+  <span>印刷モード</span>
+  <div class="side-print-mode-actions">
+    <button id="sidePrintModeExit" type="button">解除</button>
+    <button class="primary" id="sidePrintModePrint" type="button" title="印刷画面でPDFとして保存">印刷用PDFを作成</button>
+  </div>
+</div>
+<header class="site-header">
+  <div class="header-shell">
+    <div class="header-copy">
+      <h1>日本語訳: Real-time conflict risk at signalized intersection using drone video</h1>
 <ul><li>原文ファイル: Real-time conflict risk at signalized intersection using drone video.pdf</li><li>ページ数: 10</li><li>作成日時: 2026-06-08 04:56:24</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+    </div>
+    <div class="header-actions" id="sideHeaderActions">
+      <button class="menu-button" id="sideMenuToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sidePrintMenu">メニュー</button>
+      <div class="side-menu" id="sidePrintMenu" role="menu" aria-label="印刷メニュー">
+        <span class="menu-label">印刷方向</span>
+        <div class="orientation-group" role="group" aria-label="印刷方向">
+          <button class="orientation-button" type="button" data-print-orientation="portrait" aria-pressed="false">縦</button>
+          <button class="orientation-button" type="button" data-print-orientation="landscape" aria-pressed="true">横</button>
+        </div>
+        <label class="option-row"><input id="sidePrintSummary" type="checkbox"> 要約付き</label>
+        <label class="option-row"><input id="sidePrintDuplex" type="checkbox"> 両面向け余白</label>
+        <label class="option-row"><input id="sidePrintRules" type="checkbox"> 罫線あり</label>
+        <label class="option-row"><input id="sidePrintMode" type="checkbox"> 印刷モード</label>
+        <button class="print-button" id="sidePrintButton" type="button" title="印刷画面でPDFとして保存">印刷用PDFを作成</button>
+      </div>
+    </div>
+  </div>
 </header>
 <main>
+<section class="print-title-page" aria-label="タイトル">
+  <h1>日本語訳: Real-time conflict risk at signalized intersection using drone video</h1>
+  <p>原文PDFと日本語訳の見開き印刷用ページです。</p>
+  <ul class="print-title-meta"><li>原文ファイル: Real-time conflict risk at signalized intersection using drone video.pdf</li><li>ページ数: 10</li><li>作成日時: 2026-06-08 04:56:24</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+</section>
 
 <section class="page-pair" id="page-1">
   <aside class="page-visual">
@@ -344,7 +800,167 @@
   </article>
 </section>
 
+
+<section class="print-summary-page" aria-label="要約">
+  <h2>要約</h2>
+  <p>日本語訳: Real-time conflict risk at signalized intersection using drone video</p>
+  <ul><li>原文ファイル: Real-time conflict risk at signalized intersection using drone video.pdf</li><li>ページ数: 10</li><li>作成日時: 2026-06-08 04:56:24</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+  <ol>
+    <li><strong>ページ 1</strong>: ドローンビデオを使用した信号交差点でのリアルタイムの紛争リスク: 平均と分散に不均一性があるランダム パラメーター ロジット モデル Shile Zhang、N.N. Sze * 香港理工大学土木環境工学部、香港九龍、紅磡 記事情報 キーワード: 紛争重大度 多項ロジット モデル ドローン ビデオ ランダム パラメーター モデル 平均と…</li><li><strong>ページ 2</strong>: つまり、邪魔されていない通路、交通渋滞、交通事故です。交通紛争は交通事故よりもはるかに蔓延しています。これらは簡単に観察でき、クラッシュのリスクを代理するために使用できます。リアルタイムの安全性評価に交通衝突を採用することがますます一般的になっています。たとえば、侵入後時間（PET）と衝突までの時間（TTC）を含む 2 つの近接指標は、…</li><li><strong>ページ 3</strong>: 警察の事故データベース。近年、一部の研究者は、交通量、車両占有率、平均速度、車両混合などの交通パラメータを組み込んだ、高速道路や幹線道路のリアルタイム衝突予測モデルを確立しています (Wang et al., 2017; Yuan and Abdel-Aty, 2018; Bao et al., 2019; Zhang and Abde…</li><li><strong>ページ 4</strong>: 図 1 と図 2 は、2 台の車両が関与する衝突を示しています。図１に示すように、衝突は交差する角度によって、追突衝突、正面衝突、斜め衝突の３種類に階層化される（Wu et al., 2020; Arun et al., 2021）。図２に示すように、対話における「車両１」は先行車両を、「車両２」は後続車両をそれぞれ示す。追突事故（図…</li><li><strong>ページ 5</strong>: モデルの複雑さを考慮して、情報量基準 (AIC) とベイズ情報量基準 (BIC) が採用されます。 AIC および BIC 値が小さいほど、モデルの適合性が優れていることを示します。表 3 に示すように、候補モデルの中で最も低い AIC 値を考慮して、平均と分散に不均一性があるランダム パラメーター ロジット モデルが考慮されます。表…</li><li><strong>ページ 6</strong>: ドローンを使用して収集したリアルタイムの軌跡データに基づいて、信号交差点における車車および二輪車の衝突リスクにおける自転車と車の速度や加速度）およびサイクル（サイクルタイムや青時間など）のレベルを調査します。車両と車両および車両とオートバイの衝突のリスクに対する影響要因の限界効果を表 7 にまとめます。 6.1.車両およびオートバイの属…</li><li><strong>ページ 7</strong>: 2 台の車両間の追突事故の可能性 (Tarko と Lizarazo、2021 年)。一方、横速度が 1 単位増加すると、軽度および重度の車両衝突のリスクが 2.4 % および 1.9 % 増加します。同様に、車両の横速度が 1 単位増加すると、軽度および重度の車両とオートバイの衝突のリスクが 3.0 % および 2.6 % 増加します…</li><li><strong>ページ 8</strong>: 実装することができます (Jin et al., 2021)。最後に重要なことですが、グリーンまでの時間が 1 台増加すると、深刻な車両とオートバイの衝突のリスクが 3.9 % 増加します。これは、道路利用者の不安に起因する可能性があり、特にオートバイの運転者はよりリスクを負い、攻撃的になる傾向があります (Song et al., 2…</li><li><strong>ページ 9</strong>: CRediT 著者寄稿文 Shile Zhang: 執筆 – 原案、方法論、調査、形式分析、データキュレーション、概念化。 N.N.サイズ: 概念化、方法論、監修、執筆 – レビューと編集。競合する利益の宣言 著者らは、この論文で報告されている研究に影響を及ぼした可能性がある既知の競合する経済的利益や個人的関係がないことを宣言します。デ…</li><li><strong>ページ 10</strong>: Song、P.、Sze、N.N.、Zheng、O.、Abdel-Aty、M.、2022a。トンネル料金所における紛争リスクの分析のための、道路利用者レベルでの観察されない不均一性への対処: 平均値の不均一性を使用した、相関グループ化されたランダム パラメーター ロジット アプローチ。アナル。メソッド酸。解像度36、100243。Stip…</li>
+  </ol>
+</section>
+
 </main>
+
+  <script>
+    (function () {
+      const storagePrefix = "sideBySidePrint.";
+      const body = document.body;
+      const menuWrap = document.getElementById("sideHeaderActions");
+      const menuToggle = document.getElementById("sideMenuToggle");
+      const printButton = document.getElementById("sidePrintButton");
+      const printSummary = document.getElementById("sidePrintSummary");
+      const printDuplex = document.getElementById("sidePrintDuplex");
+      const printRules = document.getElementById("sidePrintRules");
+      const printMode = document.getElementById("sidePrintMode");
+      const printModeExit = document.getElementById("sidePrintModeExit");
+      const printModePrint = document.getElementById("sidePrintModePrint");
+      const orientationButtons = Array.from(document.querySelectorAll("[data-print-orientation]"));
+      let printOrientation = localStorage.getItem(storagePrefix + "orientation") || "landscape";
+
+      if (window.parent !== window) body.classList.add("embedded-frame");
+
+      function storedBoolean(key) {
+        return localStorage.getItem(storagePrefix + key) === "true";
+      }
+
+      function setMenuOpen(open) {
+        if (!menuWrap || !menuToggle) return;
+        menuWrap.classList.toggle("menu-open", open);
+        menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+
+      function currentOptions() {
+        return {
+          orientation: printOrientation === "portrait" ? "portrait" : "landscape",
+          summary: Boolean(printSummary && printSummary.checked),
+          duplex: Boolean(printDuplex && printDuplex.checked),
+          rules: Boolean(printRules && printRules.checked),
+          printMode: Boolean(printMode && printMode.checked),
+        };
+      }
+
+      function writePageStyle(options) {
+        const style = document.getElementById("sideBySidePrintPageStyle") || document.createElement("style");
+        style.id = "sideBySidePrintPageStyle";
+        const size = options.orientation === "portrait" ? "A4 portrait" : "A4 landscape";
+        const margin = options.orientation === "portrait" ? "12mm" : "10mm";
+        const duplex = options.duplex
+          ? "@page :left { margin-left: 16mm; margin-right: 10mm; } @page :right { margin-left: 10mm; margin-right: 16mm; }"
+          : "";
+        style.textContent = "@page { size: " + size + "; margin: " + margin + "; } " + duplex;
+        if (!style.parentElement) document.head.appendChild(style);
+      }
+
+      function applyViewerDisplayOptions(rawOptions) {
+        const options = rawOptions || {};
+        if (options.orientation === "portrait" || options.orientation === "landscape") {
+          printOrientation = options.orientation;
+        }
+        if (printSummary && Object.prototype.hasOwnProperty.call(options, "summary")) {
+          printSummary.checked = Boolean(options.summary);
+        }
+        if (printDuplex && Object.prototype.hasOwnProperty.call(options, "duplex")) {
+          printDuplex.checked = Boolean(options.duplex);
+        }
+        if (printRules && Object.prototype.hasOwnProperty.call(options, "rules")) {
+          printRules.checked = Boolean(options.rules);
+        }
+        if (printMode && Object.prototype.hasOwnProperty.call(options, "printMode")) {
+          printMode.checked = Boolean(options.printMode);
+        }
+
+        const normalized = currentOptions();
+        body.classList.toggle("print-portrait", normalized.orientation === "portrait");
+        body.classList.toggle("print-landscape", normalized.orientation !== "portrait");
+        body.classList.toggle("print-with-summary", normalized.summary);
+        body.classList.toggle("print-rules", normalized.rules);
+        body.classList.toggle("print-mode", normalized.printMode);
+        writePageStyle(normalized);
+
+        localStorage.setItem(storagePrefix + "orientation", normalized.orientation);
+        localStorage.setItem(storagePrefix + "summary", normalized.summary ? "true" : "false");
+        localStorage.setItem(storagePrefix + "duplex", normalized.duplex ? "true" : "false");
+        localStorage.setItem(storagePrefix + "rules", normalized.rules ? "true" : "false");
+
+        for (const button of orientationButtons) {
+          const active = button.dataset.printOrientation === normalized.orientation;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-pressed", active ? "true" : "false");
+        }
+      }
+
+      function printWithViewerOptions(options) {
+        applyViewerDisplayOptions(options || {});
+        setMenuOpen(false);
+        window.setTimeout(() => {
+          window.focus();
+          window.print();
+        }, 50);
+      }
+
+      if (printSummary) printSummary.checked = storedBoolean("summary");
+      if (printDuplex) printDuplex.checked = storedBoolean("duplex");
+      if (printRules) printRules.checked = storedBoolean("rules");
+      if (printMode) printMode.checked = false;
+
+      for (const button of orientationButtons) {
+        button.addEventListener("click", () => {
+          applyViewerDisplayOptions({ orientation: button.dataset.printOrientation });
+        });
+      }
+      for (const checkbox of [printSummary, printDuplex, printRules, printMode]) {
+        if (checkbox) checkbox.addEventListener("change", () => applyViewerDisplayOptions(currentOptions()));
+      }
+      if (menuToggle) {
+        menuToggle.addEventListener("click", () => {
+          setMenuOpen(!menuWrap.classList.contains("menu-open"));
+        });
+      }
+      if (printButton) {
+        printButton.addEventListener("click", () => printWithViewerOptions(currentOptions()));
+      }
+      if (printModeExit) {
+        printModeExit.addEventListener("click", () => applyViewerDisplayOptions({ ...currentOptions(), printMode: false }));
+      }
+      if (printModePrint) {
+        printModePrint.addEventListener("click", () => printWithViewerOptions(currentOptions()));
+      }
+      document.addEventListener("click", (event) => {
+        if (menuWrap && !menuWrap.contains(event.target)) setMenuOpen(false);
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && printMode && printMode.checked) {
+          applyViewerDisplayOptions({ ...currentOptions(), printMode: false });
+          return;
+        }
+        if (event.key === "Escape") setMenuOpen(false);
+      });
+      window.addEventListener("message", (event) => {
+        const data = event.data || {};
+        if (data.type === "pdf-viewer-display-options") {
+          applyViewerDisplayOptions(data.options || {});
+        } else if (data.type === "pdf-viewer-print") {
+          printWithViewerOptions(data.options || {});
+        }
+      });
+
+      window.applyViewerDisplayOptions = applyViewerDisplayOptions;
+      window.printWithViewerOptions = printWithViewerOptions;
+      applyViewerDisplayOptions(currentOptions());
+    })();
+  </script>
+
 
 <style id="viewer-page-close-style">
   .viewer-page-close-button {

@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>日本語訳: TwowheelersovertakingbehaviorJTSS2019inpress</title>
   <style>
+
     :root {
       color-scheme: light;
       --border: #d7dde5;
@@ -12,6 +13,8 @@
       --muted: #52606d;
       --guide-bg: #f5f7fa;
       --guide-border: #6b8faf;
+      --panel: #f8fafc;
+      --rule: #9ca3af;
     }
     body {
       color: var(--ink);
@@ -20,20 +23,99 @@
       margin: 0;
       background: #ffffff;
     }
-    header {
+    .site-header {
       border-bottom: 1px solid var(--border);
       margin: 0 auto;
       max-width: 1480px;
       padding: 24px 24px 18px;
     }
-    header h1 {
+    .header-shell {
+      align-items: start;
+      display: grid;
+      gap: 18px;
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .header-copy h1 {
       font-size: 1.55rem;
       line-height: 1.35;
       margin: 0 0 0.75rem;
     }
-    header ul {
+    .header-copy ul {
       margin: 0;
       padding-left: 1.2rem;
+    }
+    .header-actions {
+      position: relative;
+    }
+    .menu-button,
+    .print-button,
+    .orientation-button {
+      appearance: none;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+    }
+    .menu-button {
+      min-width: 92px;
+      padding: 0.55rem 0.8rem;
+    }
+    .side-menu {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16);
+      display: none;
+      min-width: 260px;
+      padding: 12px;
+      position: absolute;
+      right: 0;
+      top: calc(100% + 8px);
+      z-index: 10;
+    }
+    .header-actions.menu-open .side-menu {
+      display: block;
+    }
+    .menu-label {
+      color: var(--muted);
+      display: block;
+      font-size: 0.82rem;
+      line-height: 1.35;
+      margin: 0 0 0.45rem;
+    }
+    .orientation-group {
+      display: grid;
+      gap: 6px;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 0.7rem;
+    }
+    .orientation-button {
+      padding: 0.45rem 0.7rem;
+    }
+    .orientation-button.active {
+      background: #243447;
+      border-color: #243447;
+      color: #ffffff;
+    }
+    .option-row {
+      align-items: center;
+      display: flex;
+      gap: 0.55rem;
+      margin: 0.55rem 0;
+    }
+    .option-row input {
+      height: 1rem;
+      width: 1rem;
+    }
+    .print-button {
+      background: #243447;
+      border-color: #243447;
+      color: #ffffff;
+      margin-top: 0.55rem;
+      padding: 0.55rem 0.75rem;
+      width: 100%;
     }
     main {
       margin: 0 auto;
@@ -100,10 +182,202 @@
       border: 1px solid var(--border);
       padding: 1rem;
     }
+    .print-title-page,
+    .print-summary-page {
+      display: none;
+    }
+    .side-print-mode-bar {
+      align-items: center;
+      background: #243447;
+      color: #ffffff;
+      display: none;
+      gap: 10px;
+      justify-content: space-between;
+      min-height: 46px;
+      padding: 8px 14px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+    .side-print-mode-bar span {
+      font-weight: 700;
+    }
+    .side-print-mode-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .side-print-mode-bar button {
+      appearance: none;
+      background: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      border-radius: 8px;
+      color: #243447;
+      cursor: pointer;
+      font: inherit;
+      min-height: 32px;
+      padding: 0 12px;
+    }
+    .side-print-mode-bar .primary {
+      background: #ffffff;
+      color: #123c69;
+      font-weight: 700;
+    }
+    .print-title-page h1,
+    .print-summary-page h2 {
+      line-height: 1.35;
+      margin: 0 0 1rem;
+    }
+    .print-title-meta {
+      color: var(--muted);
+      margin-top: 1.5rem;
+    }
+    body.print-rules .page-pair {
+      border-bottom-color: var(--rule);
+    }
+    body.print-rules .page-visual,
+    body.print-rules .page-translation {
+      border: 1px solid var(--rule);
+      box-sizing: border-box;
+      padding: 14px;
+    }
+    body.print-rules h1,
+    body.print-rules h2,
+    body.print-rules h3 {
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 8px;
+    }
+    body.print-rules p,
+    body.print-rules li {
+      --rule-row-height: 1.75em;
+      background-image: linear-gradient(
+        to bottom,
+        transparent calc(var(--rule-row-height) - 1px),
+        rgba(156, 163, 175, 0.8) calc(var(--rule-row-height) - 1px)
+      );
+      background-origin: content-box;
+      background-clip: content-box;
+      background-repeat: repeat-y;
+      background-size: 100% var(--rule-row-height);
+      padding-bottom: 0.35em;
+    }
+    body.print-mode {
+      background: #d8dee8;
+      font-size: 10pt;
+      line-height: 1.5;
+      padding: 0 18px 24px;
+    }
+    body.print-mode:not(.embedded-frame) .side-print-mode-bar {
+      display: flex;
+    }
+    body.print-mode .site-header {
+      display: none;
+    }
+    body.print-mode main {
+      margin: 18px auto 0;
+      max-width: none;
+      padding: 0;
+    }
+    body.print-mode h2 {
+      font-size: 12pt;
+    }
+    body.print-mode h3 {
+      font-size: 10pt;
+    }
+    body.print-mode .page-pair,
+    body.print-mode .print-title-page,
+    body.print-mode .print-summary-page {
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+      box-sizing: border-box;
+      margin-bottom: 18px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 34px 38px;
+    }
+    body.print-mode .sticky {
+      position: static;
+    }
+    body.print-mode img {
+      max-height: none;
+    }
+    body.print-mode.print-landscape .page-pair {
+      display: grid;
+      gap: 22px;
+      grid-template-columns: 48% 1fr;
+      max-width: 1123px;
+      min-height: 794px;
+      page-break-after: auto;
+    }
+    body.print-mode.print-landscape .page-translation {
+      font-size: 7.2pt;
+      line-height: 1.24;
+    }
+    body.print-mode.print-landscape .page-translation h2,
+    body.print-mode.print-landscape .page-translation h3 {
+      font-size: 8.4pt;
+    }
+    body.print-mode.print-landscape img {
+      max-height: 680px;
+    }
+    body.print-mode.print-portrait .print-title-page {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 794px;
+      min-height: 1123px;
+    }
+    body.print-mode.print-portrait .page-pair {
+      background: transparent;
+      box-shadow: none;
+      display: contents;
+      padding: 0;
+    }
+    body.print-mode.print-portrait .page-visual,
+    body.print-mode.print-portrait .page-translation {
+      background: #ffffff;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+      box-sizing: border-box;
+      margin: 0 auto 18px;
+      max-width: 794px;
+      min-height: 1123px;
+      padding: 34px 38px;
+    }
+    body.print-mode.print-portrait .page-visual {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    body.print-mode.print-portrait .page-translation {
+      font-size: 8.8pt;
+      line-height: 1.38;
+    }
+    body.print-mode.print-portrait img {
+      max-height: 960px;
+    }
+    body.print-mode.print-with-summary .print-summary-page {
+      display: block;
+      max-width: 794px;
+      min-height: 1123px;
+    }
+    body.print-mode.print-with-summary.print-landscape .print-summary-page {
+      max-width: 1123px;
+      min-height: 794px;
+    }
     @media (max-width: 900px) {
-      header, main {
+      .site-header,
+      main {
         padding-left: 14px;
         padding-right: 14px;
+      }
+      .header-shell {
+        grid-template-columns: 1fr;
+      }
+      .header-actions {
+        justify-self: start;
+      }
+      .side-menu {
+        left: 0;
+        right: auto;
       }
       .page-pair {
         grid-template-columns: 1fr;
@@ -116,9 +390,42 @@
       }
     }
     @media print {
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+      html,
+      body {
+        background: #ffffff !important;
+      }
+      body {
+        font-size: 10pt;
+        line-height: 1.5;
+      }
+      .site-header {
+        display: none !important;
+      }
+      main {
+        margin: 0;
+        max-width: none;
+        padding: 0;
+      }
+      h2 {
+        font-size: 12pt;
+      }
+      h3 {
+        font-size: 10pt;
+      }
+      p {
+        margin-bottom: 0.55rem;
+      }
+      ul {
+        margin-bottom: 0.65rem;
+      }
       .page-pair {
-        break-inside: avoid;
-        grid-template-columns: 48% 1fr;
+        border: 0;
+        margin: 0;
+        padding: 0;
       }
       .sticky {
         position: static;
@@ -126,7 +433,125 @@
       img {
         max-height: none;
       }
+      figcaption {
+        font-size: 8pt;
+      }
+      body.print-landscape .page-pair {
+        break-after: page;
+        break-inside: avoid;
+        display: grid;
+        gap: 7mm;
+        grid-template-columns: 48% 1fr;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+        page-break-inside: avoid;
+      }
+      body.print-landscape .page-visual,
+      body.print-landscape .page-translation {
+        align-self: start;
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+      body.print-landscape .page-translation {
+        font-size: 7.2pt;
+        line-height: 1.24;
+      }
+      body.print-landscape .page-translation h2,
+      body.print-landscape .page-translation h3 {
+        font-size: 8.4pt;
+      }
+      body.print-landscape .page-translation > ul:first-of-type {
+        background: transparent;
+        border-left-width: 2px;
+        padding: 0.35rem 0.5rem 0.35rem 0.85rem;
+      }
+      body.print-landscape img {
+        max-height: calc(100vh - 18mm);
+      }
+      body.print-portrait .print-title-page {
+        break-after: page;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+      }
+      body.print-portrait .print-title-page h1 {
+        font-size: 22pt;
+      }
+      body.print-portrait .page-pair {
+        display: block;
+      }
+      body.print-portrait .page-visual,
+      body.print-portrait .page-translation {
+        break-after: page;
+        box-sizing: border-box;
+        min-height: calc(100vh - 4mm);
+        page-break-after: always;
+      }
+      body.print-portrait .page-visual {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      body.print-portrait .page-translation {
+        font-size: 8.8pt;
+        line-height: 1.38;
+      }
+      body.print-portrait img {
+        max-height: calc(100vh - 24mm);
+      }
+      body.print-with-summary .print-summary-page {
+        break-before: page;
+        box-sizing: border-box;
+        display: block;
+        min-height: calc(100vh - 4mm);
+        page-break-before: always;
+      }
+      body.print-with-summary .print-summary-page li {
+        margin-bottom: 0.5rem;
+      }
+      body.print-rules .print-title-page,
+      body.print-rules .print-summary-page,
+      body.print-rules .page-visual,
+      body.print-rules .page-translation {
+        border: 1px solid var(--rule);
+        padding: 4mm;
+      }
+      body.print-rules p,
+      body.print-rules li {
+        --rule-row-height: 1.5em;
+      }
+      body.print-rules.print-landscape .page-translation p,
+      body.print-rules.print-landscape .page-translation li {
+        --rule-row-height: 1.24em;
+      }
+      body.print-rules.print-portrait .page-translation p,
+      body.print-rules.print-portrait .page-translation li {
+        --rule-row-height: 1.38em;
+      }
+      * {
+        box-shadow: none !important;
+      }
+      .side-print-mode-bar {
+        display: none !important;
+      }
+      body.print-mode {
+        background: #ffffff !important;
+        padding: 0;
+      }
+      body.print-mode .page-pair,
+      body.print-mode .print-title-page,
+      body.print-mode .print-summary-page,
+      body.print-mode .page-visual,
+      body.print-mode .page-translation {
+        box-shadow: none;
+        margin: 0;
+        max-width: none;
+      }
     }
+
   </style>
 <!-- zotero-connector-head:start -->
 <meta name="citation_title" content="Examining two-wheelers&#x27; overtaking behavior and lateral distance choices at a shared roadway facility" data-zotero-connector="server">
@@ -154,11 +579,42 @@
 <!-- zotero-connector-body:start -->
 <span class="Z3988" title="ctx_ver=Z39.88-2004&amp;rft_val_fmt=info%3Aofi%2Ffmt%3Akev%3Amtx%3Ajournal&amp;rft.genre=article&amp;rft.atitle=Examining+two-wheelers%27+overtaking+behavior+and+lateral+distance+choices+at+a+shared+roadway+facility&amp;rft.jtitle=Journal+of+Transportation+Safety+%26+Security&amp;rft.date=2019&amp;rft_id=info%3Adoi%2F10.1080%2F19439962.2019.1571549&amp;rft.au=Yanyong+Guo&amp;rft.au=Tarek+Sayed&amp;rft.au=Mohamed+H.+Zaki" data-zotero-connector="server" hidden></span>
 <!-- zotero-connector-body:end -->
-<header>
-<h1>日本語訳: TwowheelersovertakingbehaviorJTSS2019inpress</h1>
+<div class="side-print-mode-bar" id="sidePrintModeBar">
+  <span>印刷モード</span>
+  <div class="side-print-mode-actions">
+    <button id="sidePrintModeExit" type="button">解除</button>
+    <button class="primary" id="sidePrintModePrint" type="button" title="印刷画面でPDFとして保存">印刷用PDFを作成</button>
+  </div>
+</div>
+<header class="site-header">
+  <div class="header-shell">
+    <div class="header-copy">
+      <h1>日本語訳: TwowheelersovertakingbehaviorJTSS2019inpress</h1>
 <ul><li>原文ファイル: TwowheelersovertakingbehaviorJTSS2019inpress.pdf</li><li>ページ数: 22</li><li>作成日時: 2026-06-08 04:57:03</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+    </div>
+    <div class="header-actions" id="sideHeaderActions">
+      <button class="menu-button" id="sideMenuToggle" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sidePrintMenu">メニュー</button>
+      <div class="side-menu" id="sidePrintMenu" role="menu" aria-label="印刷メニュー">
+        <span class="menu-label">印刷方向</span>
+        <div class="orientation-group" role="group" aria-label="印刷方向">
+          <button class="orientation-button" type="button" data-print-orientation="portrait" aria-pressed="false">縦</button>
+          <button class="orientation-button" type="button" data-print-orientation="landscape" aria-pressed="true">横</button>
+        </div>
+        <label class="option-row"><input id="sidePrintSummary" type="checkbox"> 要約付き</label>
+        <label class="option-row"><input id="sidePrintDuplex" type="checkbox"> 両面向け余白</label>
+        <label class="option-row"><input id="sidePrintRules" type="checkbox"> 罫線あり</label>
+        <label class="option-row"><input id="sidePrintMode" type="checkbox"> 印刷モード</label>
+        <button class="print-button" id="sidePrintButton" type="button" title="印刷画面でPDFとして保存">印刷用PDFを作成</button>
+      </div>
+    </div>
+  </div>
 </header>
 <main>
+<section class="print-title-page" aria-label="タイトル">
+  <h1>日本語訳: TwowheelersovertakingbehaviorJTSS2019inpress</h1>
+  <p>原文PDFと日本語訳の見開き印刷用ページです。</p>
+  <ul class="print-title-meta"><li>原文ファイル: TwowheelersovertakingbehaviorJTSS2019inpress.pdf</li><li>ページ数: 22</li><li>作成日時: 2026-06-08 04:57:03</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+</section>
 
 <section class="page-pair" id="page-1">
   <aside class="page-visual">
@@ -511,7 +967,167 @@
   </article>
 </section>
 
+
+<section class="print-summary-page" aria-label="要約">
+  <h2>要約</h2>
+  <p>日本語訳: TwowheelersovertakingbehaviorJTSS2019inpress</p>
+  <ul><li>原文ファイル: TwowheelersovertakingbehaviorJTSS2019inpress.pdf</li><li>ページ数: 22</li><li>作成日時: 2026-06-08 04:57:03</li><li>注記: PDFから抽出した本文の機械翻訳です。図表、数式、脚注、参考文献の体裁は元PDFと完全には一致しません。</li></ul>
+  <ol>
+    <li><strong>ページ 1</strong>: アクセスおよび使用に関する全利用規約は、https://www.tandfonline.com/action/journalInformation?journalCode=utss20 でご覧いただけます。 Journal of Transportation Safety &amp; Security ISSN: 1943-9962 (Prin…</li><li><strong>ページ 2</strong>: 共有道路施設における二輪車の追い越し動作と横距離の選択の検討 ヤンヨン・グオ、タレク・サイード、モハメド・H. ザキ ブリティッシュ・コロンビア大学土木工学科、バンクーバー、カナダ 要旨 この記事では、共有道路で追い越しをする二輪車 (自転車、電動自転車、電動スクーター) が自動車から遠ざける横方向の距離を調査します。ビデオベースのコン…</li><li><strong>ページ 3</strong>: 二輪車と自動車の間。これらの横方向の相互作用は、交通衝突の可能性が高く (Tageldin、Sayed、および Wang、2015)、交通パフォーマンスと安全性に重大な影響を及ぼします (Sayed、Zaki、および Autey、2013)。実際、二輪車が関与する衝突事故は、通常、共有道路での交通事故で最も多く見られます (Naci、C…</li><li><strong>ページ 4</strong>: この研究は、二輪車の安全問題に焦点を当てた対策の開発に役立つ可能性があります。さらに、混合交通環境におけるマイクロシミュレーション モデルを改善するために使用できます。 2. 文献レビュー 2.1.自動車と二輪車の間の横方向の距離 これまでの研究は、自動車と自転車/オートバイの間の横方向の相互作用を調査するために、特に横方向の距離の分析…</li><li><strong>ページ 5</strong>: 自転車の追い越しをする電動車両の距離に影響を与える一方、近くの駐車場や対向車両は電動車両の追い越し距離を短縮します。 Stewart と McHale (2014) は、都市道路での自転車の通過距離を表す 2 つの一般化線形モデル (GLM) モデルを開発しました。対向車、有効車線幅、自転車車線幅、自転車と車両の速度、手前側と反対側の駐…</li><li><strong>ページ 6</strong>: しかし、自動車を追い越す二輪車の横方向の距離に焦点を当てた研究はほとんどありません。これまでの研究では、二輪車の追い越し操作中に二輪車が自動車から遠ざける横方向の距離の特徴を説明する能力は比較的限られていました。さらに、世界中で新たな交通手段となっている自転車、電動自転車、電動スクーターなどの追い越し二輪車の種類によって、この横方向の距…</li><li><strong>ページ 7</strong>: 3.2.道路利用者の追跡と横距離の収集 ビデオデータは、コンピュータビジョンを使用して処理され、各道路利用者の時空間情報が抽出されます（Guo et al., 2017; Saunier, Sayed, &amp; Ismail, 2010; Saunier &amp; Sayed, 2006）。ビデオ処理の最初のステップでは、Kanade –Luca…</li><li><strong>ページ 8</strong>: そのオブジェクトに関連付けられています。構造上、ボックスの精度は 2 つの要素に依存します。まず、カバー力が特徴です。追跡ステップからのフィーチャが道路利用者上に均等に分散されていない場合、境界ボックスは道路利用者が占める領域を過小評価する可能性があります。 2つ目はカメラのキャリブレーションです。カメラのキャリブレーション精度が満足で…</li><li><strong>ページ 9</strong>: user は、特定の道路利用者を選択するために使用されます。そのため、追跡された物体から車両と歩行者が識別されます。最高速度や移動パターンなどの道路利用者の移動特徴は、自転車とMTWを区別するための手がかりとして使用されます。具体的には、サイクリストはペダリング プロセスの変化を伴う動作プロファイルを生成します。このような場合、ケイデン…</li><li><strong>ページ 10</strong>: logit piðÞ ⁄ ln pi 1 /C0 pi /C20/C21 ⁄ b0 þ b1x1i þ b2x2i þ/C1/C1/C1þbkxki (2) 式 (2) は次のように書き換えることができます。 þ/C1/C1/C1þbkxkiðÞ 1 þ exp b0 þ b1x1i þ b2x2i þ/C1/C1/C1þbkxkiðÞ…</li><li><strong>ページ 11</strong>: データセット Y とモデルパラメータの b. f(Yjb) は、式 (4) で指定されるパラメータ b の尤度条件関数です。関数 p(b)i はパラメータ b の事前分布です。この研究では、次の非有益な事前分布が使用されました。 b /C24N 0k; 106Ik /C0/C1 (6) ここで、0k は k /C2 1 つのゼロのベクト…</li><li><strong>ページ 12</strong>: (ワシントン、カーラフティス、およびマナーリング、2003)。 FBBL モデルの変数 xj の OR は、OR = オッズ X として計算できます。 xj þ 1ðÞ オッズ X; xjðÞ 1/4 exp XbðÞ /C2 exp bj /C0/C1 exp XbðÞ 1/4 exp bj /C0/C1 (8) 5. 結果と考察 5…</li><li><strong>ページ 13</strong>: 最尤推定 (MLE) 技術を利用して、分布のパラメータを推定しました。適合度テストは、指定された候補分布の中から最もよく適合する分布を選択するために実行されました。コルモゴロフ – スミルノフ (K –S) 検定は、交通研究においてサンプルを特定の確率分布と比較するために広く使用されています (Ibeas, Cordera, dell…</li><li><strong>ページ 14</strong>: 表 1. 横方向距離のコルモゴロフ - スミルノフ検定。正規分布 対数正規分布 ガンマ分布 ワイブル分布 パラメータ K –Sa pb パラメータ K –S p パラメータ K –S P パラメータ K –S p CV 電動自転車 (1.47, 0.28) 0.060 0.84 (0.37, 0.19) 0.058 0.87 (28.4…</li><li><strong>ページ 15</strong>: 図 5a は、ガンマ分布と対数正規分布を含むデータ サンプルのヒストグラムと理論的分布を示しています。図に示されているように、2 つの分布間の差は非常にわずかです。 2. 異なる二輪車クラスの場合、電動自転車、エスクーター、自転車の横方向の距離は、最適分布であるガンマ分布に従います。ただし、最適に適合したガンマ分布の形状パラメーターは、…</li><li><strong>ページ 16</strong>: FBBL モデルのカットオフ ポイントとして使用します (LD /C20 1.1 m の場合は 1 としてマークされ、それ以外の場合は 0 としてマークされます)。モデルで考慮される候補変数を表 2 に示します。 FBBL モデル推定の前に、相関分析が実行され、相関のある変数がさらなる分析から除外されます。ベイジアン分析ソフトウェア W…</li><li><strong>ページ 17</strong>: ライダーは。この結果は、図 4 の横方向距離の比較分析と一致しており、自転車の方が電動自転車や電動スクーターのライダーよりも横方向の距離が大きいことを好むことがわかります。電動自転車やエスクーターは速度を上げたり追い越したりするために自動車の車線を占有する可能性が高いため、この結果は当然です。さらに、電動スクーターのバイナリ変数の OR…</li><li><strong>ページ 18</strong>: （2014年）。これについて考えられる説明は、大型車両の方がリスクが高いという二輪車ライダーの認識に関連している可能性があります。この 2 値変数の OR は 0.496 で、対話する自動車が大型車両の場合、二輪車のライダーが臨界横距離を受け入れる可能性は、対話する自動車が乗用車の場合の 0.496 倍であることを示しています。回避行動…</li><li><strong>ページ 19</strong>: 重要な横方向の距離を受け入れる。この結果は、いくつかの以前の研究と一致しています (Stewart &amp; McHale、2014; Vlahogianni、2014)。 6. 結論と考察 本研究では、共用道路における追い越し二輪車と自動車との横距離を評価した。ビデオベースのコンピューター ビジョン技術を使用して、道路利用者が追跡され、横方…</li><li><strong>ページ 20</strong>: 自転車よりも。これは、電動自転車や電動スクーターが自転車よりも紛争を起こしやすい可能性があることを示しています。そのため、電動自転車や電動スクーターに対する規制や現場での取り締まりを策定する必要があります。さらに、ヨーレートに反映される二輪車の方向転換操作は、臨界横距離を受け入れる可能性に大きく関係します。したがって、彼らの乗車行動を規…</li><li><strong>ページ 21</strong>: Guo, Y.、Liu, P.、Bai, L.、Xu, C.、Chen, J. (2014)。中国の信号交差点における電動自転車の赤信号走行行為。交通研究記録: 交通研究委員会ジャーナル、2468(1)、28 –37。土井: 10.3141/2468-04 Guo, Y.、Li, Z.、Wu, Y.、および Xu, C. (2018)。…</li><li><strong>ページ 22</strong>: パーキン、J.、マイヤーズ、C. (2010)。自動車交通と自転車交通の近接性に対する自転車レーンの影響。事故の分析と予防、42、159–165。 doi:10.1016/j.aap.2009.07.018 Sando, T.、Chimba, D.、Kwigizile, V.、および Moses, R. (2011)。広い縁石車線のある…</li>
+  </ol>
+</section>
+
 </main>
+
+  <script>
+    (function () {
+      const storagePrefix = "sideBySidePrint.";
+      const body = document.body;
+      const menuWrap = document.getElementById("sideHeaderActions");
+      const menuToggle = document.getElementById("sideMenuToggle");
+      const printButton = document.getElementById("sidePrintButton");
+      const printSummary = document.getElementById("sidePrintSummary");
+      const printDuplex = document.getElementById("sidePrintDuplex");
+      const printRules = document.getElementById("sidePrintRules");
+      const printMode = document.getElementById("sidePrintMode");
+      const printModeExit = document.getElementById("sidePrintModeExit");
+      const printModePrint = document.getElementById("sidePrintModePrint");
+      const orientationButtons = Array.from(document.querySelectorAll("[data-print-orientation]"));
+      let printOrientation = localStorage.getItem(storagePrefix + "orientation") || "landscape";
+
+      if (window.parent !== window) body.classList.add("embedded-frame");
+
+      function storedBoolean(key) {
+        return localStorage.getItem(storagePrefix + key) === "true";
+      }
+
+      function setMenuOpen(open) {
+        if (!menuWrap || !menuToggle) return;
+        menuWrap.classList.toggle("menu-open", open);
+        menuToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+
+      function currentOptions() {
+        return {
+          orientation: printOrientation === "portrait" ? "portrait" : "landscape",
+          summary: Boolean(printSummary && printSummary.checked),
+          duplex: Boolean(printDuplex && printDuplex.checked),
+          rules: Boolean(printRules && printRules.checked),
+          printMode: Boolean(printMode && printMode.checked),
+        };
+      }
+
+      function writePageStyle(options) {
+        const style = document.getElementById("sideBySidePrintPageStyle") || document.createElement("style");
+        style.id = "sideBySidePrintPageStyle";
+        const size = options.orientation === "portrait" ? "A4 portrait" : "A4 landscape";
+        const margin = options.orientation === "portrait" ? "12mm" : "10mm";
+        const duplex = options.duplex
+          ? "@page :left { margin-left: 16mm; margin-right: 10mm; } @page :right { margin-left: 10mm; margin-right: 16mm; }"
+          : "";
+        style.textContent = "@page { size: " + size + "; margin: " + margin + "; } " + duplex;
+        if (!style.parentElement) document.head.appendChild(style);
+      }
+
+      function applyViewerDisplayOptions(rawOptions) {
+        const options = rawOptions || {};
+        if (options.orientation === "portrait" || options.orientation === "landscape") {
+          printOrientation = options.orientation;
+        }
+        if (printSummary && Object.prototype.hasOwnProperty.call(options, "summary")) {
+          printSummary.checked = Boolean(options.summary);
+        }
+        if (printDuplex && Object.prototype.hasOwnProperty.call(options, "duplex")) {
+          printDuplex.checked = Boolean(options.duplex);
+        }
+        if (printRules && Object.prototype.hasOwnProperty.call(options, "rules")) {
+          printRules.checked = Boolean(options.rules);
+        }
+        if (printMode && Object.prototype.hasOwnProperty.call(options, "printMode")) {
+          printMode.checked = Boolean(options.printMode);
+        }
+
+        const normalized = currentOptions();
+        body.classList.toggle("print-portrait", normalized.orientation === "portrait");
+        body.classList.toggle("print-landscape", normalized.orientation !== "portrait");
+        body.classList.toggle("print-with-summary", normalized.summary);
+        body.classList.toggle("print-rules", normalized.rules);
+        body.classList.toggle("print-mode", normalized.printMode);
+        writePageStyle(normalized);
+
+        localStorage.setItem(storagePrefix + "orientation", normalized.orientation);
+        localStorage.setItem(storagePrefix + "summary", normalized.summary ? "true" : "false");
+        localStorage.setItem(storagePrefix + "duplex", normalized.duplex ? "true" : "false");
+        localStorage.setItem(storagePrefix + "rules", normalized.rules ? "true" : "false");
+
+        for (const button of orientationButtons) {
+          const active = button.dataset.printOrientation === normalized.orientation;
+          button.classList.toggle("active", active);
+          button.setAttribute("aria-pressed", active ? "true" : "false");
+        }
+      }
+
+      function printWithViewerOptions(options) {
+        applyViewerDisplayOptions(options || {});
+        setMenuOpen(false);
+        window.setTimeout(() => {
+          window.focus();
+          window.print();
+        }, 50);
+      }
+
+      if (printSummary) printSummary.checked = storedBoolean("summary");
+      if (printDuplex) printDuplex.checked = storedBoolean("duplex");
+      if (printRules) printRules.checked = storedBoolean("rules");
+      if (printMode) printMode.checked = false;
+
+      for (const button of orientationButtons) {
+        button.addEventListener("click", () => {
+          applyViewerDisplayOptions({ orientation: button.dataset.printOrientation });
+        });
+      }
+      for (const checkbox of [printSummary, printDuplex, printRules, printMode]) {
+        if (checkbox) checkbox.addEventListener("change", () => applyViewerDisplayOptions(currentOptions()));
+      }
+      if (menuToggle) {
+        menuToggle.addEventListener("click", () => {
+          setMenuOpen(!menuWrap.classList.contains("menu-open"));
+        });
+      }
+      if (printButton) {
+        printButton.addEventListener("click", () => printWithViewerOptions(currentOptions()));
+      }
+      if (printModeExit) {
+        printModeExit.addEventListener("click", () => applyViewerDisplayOptions({ ...currentOptions(), printMode: false }));
+      }
+      if (printModePrint) {
+        printModePrint.addEventListener("click", () => printWithViewerOptions(currentOptions()));
+      }
+      document.addEventListener("click", (event) => {
+        if (menuWrap && !menuWrap.contains(event.target)) setMenuOpen(false);
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && printMode && printMode.checked) {
+          applyViewerDisplayOptions({ ...currentOptions(), printMode: false });
+          return;
+        }
+        if (event.key === "Escape") setMenuOpen(false);
+      });
+      window.addEventListener("message", (event) => {
+        const data = event.data || {};
+        if (data.type === "pdf-viewer-display-options") {
+          applyViewerDisplayOptions(data.options || {});
+        } else if (data.type === "pdf-viewer-print") {
+          printWithViewerOptions(data.options || {});
+        }
+      });
+
+      window.applyViewerDisplayOptions = applyViewerDisplayOptions;
+      window.printWithViewerOptions = printWithViewerOptions;
+      applyViewerDisplayOptions(currentOptions());
+    })();
+  </script>
+
 
 <style id="viewer-page-close-style">
   .viewer-page-close-button {
